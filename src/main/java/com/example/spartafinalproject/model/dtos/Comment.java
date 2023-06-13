@@ -1,10 +1,8 @@
 package com.example.spartafinalproject.model.dtos;
-
-import com.example.spartafinalproject.model.dtos.commentsupport.Date;
-import com.example.spartafinalproject.model.dtos.commentsupport.Id;
-import com.example.spartafinalproject.model.dtos.commentsupport.MovieId;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
 
 @Document("comments")
 public class Comment{
@@ -15,15 +13,14 @@ public class Comment{
 	@JsonProperty("name")
 	private String name;
 
-	@org.springframework.data.annotation.Id
 	@JsonProperty("_id")
-	private Id id;
+	private String id;
 
 	@JsonProperty("text")
 	private String text;
 
 	@JsonProperty("movie_id")
-	private MovieId movieId;
+	private String movieId;
 
 	@JsonProperty("email")
 	private String email;
@@ -36,7 +33,7 @@ public class Comment{
 		return name;
 	}
 
-	public Id getId(){
+	public String getId(){
 		return id;
 	}
 
@@ -44,12 +41,21 @@ public class Comment{
 		return text;
 	}
 
-	public MovieId getMovieId(){
+	public String getMovieId(){
 		return movieId;
 	}
 
 	public String getEmail(){
 		return email;
+	}
+
+	public Comment(Date date, String name, String id, String text, String movieId, String email) {
+		this.date = date;
+		this.name = name;
+		this.id = id;
+		this.text = text;
+		this.movieId = movieId;
+		this.email = email;
 	}
 
 	@Override
