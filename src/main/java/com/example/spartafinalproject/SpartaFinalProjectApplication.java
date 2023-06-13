@@ -12,12 +12,5 @@ public class SpartaFinalProjectApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpartaFinalProjectApplication.class, args);
     }
-
-    @Bean
-    CommandLineRunner runner(CommentRepository repository) {
-        return args -> {
-            System.out.println(repository.findCommentById("5a9427648b0beebeb69579e7"));
-        };
-    }
-
+    
 }
