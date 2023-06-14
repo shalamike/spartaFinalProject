@@ -1,4 +1,4 @@
-package com.example.spartafinalproject.repositories;
+package com.example.spartafinalproject.model.repositories;
 
 import com.example.spartafinalproject.model.dtos.Comment;
 import org.springframework.data.mongodb.repository.MongoRepository;

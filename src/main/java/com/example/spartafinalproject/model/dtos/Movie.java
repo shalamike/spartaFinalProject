@@ -1,9 +1,11 @@
-package com.example.spartafinalproject.model.moviessupport;
+package com.example.spartafinalproject.model.dtos;
 
 import java.util.Date;
 import java.util.List;
 
-import com.example.spartafinalproject.model.moviessupport.*;
+import com.example.spartafinalproject.model.dtos.moviessupport.Awards;
+import com.example.spartafinalproject.model.dtos.moviessupport.Imdb;
+import com.example.spartafinalproject.model.dtos.moviessupport.Tomatoes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

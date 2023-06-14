@@ -1,6 +1,6 @@
-package com.example.spartafinalproject.repositories;
+package com.example.spartafinalproject.model.repositories;
 
-import com.example.spartafinalproject.model.theatersupport.Theaters;
+import com.example.spartafinalproject.model.dtos.Theaters;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
