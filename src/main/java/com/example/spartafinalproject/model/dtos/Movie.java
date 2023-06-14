@@ -1,189 +1,250 @@
 package com.example.spartafinalproject.model.dtos;
 
+import com.example.spartafinalproject.model.dtos.moviessupport.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.util.Date;
 import java.util.List;
 
-import com.example.spartafinalproject.model.dtos.moviessupport.Awards;
-import com.example.spartafinalproject.model.dtos.moviessupport.Imdb;
-import com.example.spartafinalproject.model.dtos.moviessupport.Tomatoes;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Document("movies")
 public class Movie {
+    @Id
+    @JsonProperty("_id")
+    private String id;
+    @NotNull
+    private String title;
+    @NotNull
+    private Integer year;
+    @NotNull
+    private String type;
 
-	@Id
-	@JsonProperty("_id")
-	private String id;
+    @Field("num_mflix_comments")
+    private Integer numMflixComments;
+    private List<String> directors;
+    private List<String> cast;
+    private List<String> languages;
+    private Integer runtime;
+    private List<String> writers;
+    private List<String> countries;
+    private String rated;
+    private Tomatoes tomatoes;
+    private String fullplot;
+    private Imdb imdb;
+    private String plot;
+    private List<String> genres;
+    private Awards awards;
+    private String lastupdated;
+    private String poster;
+    private Date released;
 
-	@JsonProperty("year")
-	private Integer year;
+    public Movie(@NotNull String title, @NotNull Integer year, @NotNull String type) {
+        this.title = title;
+        this.year = year;
+        this.type = type;
+        this.numMflixComments=0;//default value is 0
+    }
 
-	@JsonProperty("directors")
-	private List<String> directors;
+    public List<String> getLanguages() {
+        return languages;
+    }
 
-	@JsonProperty("runtime")
-	private Integer runtime;
+    public Integer getYear() {
+        return year;
+    }
 
-	@JsonProperty("countries")
-	private List<String> countries;
+    public List<String> getDirectors() {
+        return directors;
+    }
 
-	@JsonProperty("num_mflix_comments")
-	private Integer numMflixComments;
+    public Integer getRuntime() {
+        return runtime;
+    }
 
-	@JsonProperty("title")
-	private String title;
+    public List<String> getWriters() {
+        return writers;
+    }
 
-	@JsonProperty("type")
-	private String type;
+    public List<String> getCountries() {
+        return countries;
+    }
 
-	@JsonProperty("rated")
-	private String rated;
+    public Integer getNumMflixComments() {
+        return numMflixComments;
+    }
 
-	@JsonProperty("cast")
-	private List<String> cast;
+    public String getTitle() {
+        return title;
+    }
 
-	@JsonProperty("tomatoes")
-	private Tomatoes tomatoes;
+    public String getType() {
+        return type;
+    }
 
-	@JsonProperty("fullplot")
-	private String fullplot;
+    public String getRated() {
+        return rated;
+    }
 
-	@JsonProperty("imdb")
-	private Imdb imdb;
+    public List<String> getCast() {
+        return cast;
+    }
 
-	@JsonProperty("plot")
-	private String plot;
+    public Tomatoes getTomatoes() {
+        return tomatoes;
+    }
 
-	@JsonProperty("genres")
-	private List<String> genres;
+    public String getFullplot() {
+        return fullplot;
+    }
 
-	@JsonProperty("awards")
-	private Awards awards;
+    public Imdb getImdb() {
+        return imdb;
+    }
 
-	@JsonProperty("lastupdated")
-	private String lastupdated;
+    public String getPlot() {
+        return plot;
+    }
 
+    public List<String> getGenres() {
+        return genres;
+    }
 
-	@JsonProperty("released")
-	private Date released;
+    public Awards getAwards() {
+        return awards;
+    }
 
-	public Integer getYear(){
-		return year;
-	}
+    public String getLastupdated() {
+        return lastupdated;
+    }
 
-	public List<String> getDirectors(){
-		return directors;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public Integer getRuntime(){
-		return runtime;
-	}
+    public String getPoster() {
+        return poster;
+    }
 
-	public List<String> getCountries(){
-		return countries;
-	}
+    public Date getReleased() {
+        return released;
+    }
 
-	public Integer getNumMflixComments(){
-		return numMflixComments;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getTitle(){
-		return title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public String getType(){
-		return type;
-	}
+    public void setYear(Integer year) {
+        this.year = year;
+    }
 
-	public String getRated(){
-		return rated;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public List<String> getCast(){
-		return cast;
-	}
+    public void setNumMflixComments(Integer numMflixComments) {
+        this.numMflixComments = numMflixComments;
+    }
 
-	public Tomatoes getTomatoes(){
-		return tomatoes;
-	}
+    public void setDirectors(List<String> directors) {
+        this.directors = directors;
+    }
 
-	public String getFullplot(){
-		return fullplot;
-	}
+    public void setCast(List<String> cast) {
+        this.cast = cast;
+    }
 
-	public Imdb getImdb(){
-		return imdb;
-	}
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
+    }
 
-	public String getPlot(){
-		return plot;
-	}
+    public void setRuntime(Integer runtime) {
+        this.runtime = runtime;
+    }
 
-	public List<String> getGenres(){
-		return genres;
-	}
+    public void setWriters(List<String> writers) {
+        this.writers = writers;
+    }
 
-	public Awards getAwards(){
-		return awards;
-	}
+    public void setCountries(List<String> countries) {
+        this.countries = countries;
+    }
 
-	public String getLastupdated(){
-		return lastupdated;
-	}
+    public void setRated(String rated) {
+        this.rated = rated;
+    }
 
-	public String getId(){
-		return id;
-	}
+    public void setTomatoes(Tomatoes tomatoes) {
+        this.tomatoes = tomatoes;
+    }
 
-	public Date getReleased(){
-		return released;
-	}
+    public void setFullplot(String fullplot) {
+        this.fullplot = fullplot;
+    }
 
-	public Movie(String id, Integer year, List<String> directors, Integer runtime, List<String> countries, Integer numMflixComments, String title, String type, String rated, List<String> cast, Tomatoes tomatoes, String fullplot, Imdb imdb, String plot, List<String> genres, Awards awards, String lastupdated, Date released) {
-		this.id = id;
-		this.year = year;
-		this.directors = directors;
-		this.runtime = runtime;
-		this.countries = countries;
-		this.numMflixComments = numMflixComments;
-		this.title = title;
-		this.type = type;
-		this.rated = rated;
-		this.cast = cast;
-		this.tomatoes = tomatoes;
-		this.fullplot = fullplot;
-		this.imdb = imdb;
-		this.plot = plot;
-		this.genres = genres;
-		this.awards = awards;
-		this.lastupdated = lastupdated;
-		this.released = released;
-	}
+    public void setImdb(Imdb imdb) {
+        this.imdb = imdb;
+    }
 
-	@Override
- 	public String toString(){
-		return 
-			"Movies{" + 
-			"year = '" + year + '\'' + 
-			",directors = '" + directors + '\'' + 
-			",runtime = '" + runtime + '\'' + 
-			",countries = '" + countries + '\'' + 
-			",num_mflix_comments = '" + numMflixComments + '\'' + 
-			",title = '" + title + '\'' + 
-			",type = '" + type + '\'' + 
-			",rated = '" + rated + '\'' + 
-			",cast = '" + cast + '\'' + 
-			",tomatoes = '" + tomatoes + '\'' + 
-			",fullplot = '" + fullplot + '\'' + 
-			",imdb = '" + imdb + '\'' + 
-			",plot = '" + plot + '\'' + 
-			",genres = '" + genres + '\'' + 
-			",awards = '" + awards + '\'' + 
-			",lastupdated = '" + lastupdated + '\'' + 
-			",_id = '" + id + '\'' + 
-			",released = '" + released + '\'' + 
-			"}";
-		}
+    public void setPlot(String plot) {
+        this.plot = plot;
+    }
+
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
+
+    public void setAwards(Awards awards) {
+        this.awards = awards;
+    }
+
+    public void setLastupdated(String lastupdated) {
+        this.lastupdated = lastupdated;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public void setReleased(Date released) {
+        this.released = released;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "Movie{" +
+                        "languages = '" + languages + '\'' +
+                        ",year = '" + year + '\'' +
+                        ",directors = '" + directors + '\'' +
+                        ",runtime = '" + runtime + '\'' +
+                        ",writers = '" + writers + '\'' +
+                        ",countries = '" + countries + '\'' +
+                        ",num_mflix_comments = '" + numMflixComments + '\'' +
+                        ",title = '" + title + '\'' +
+                        ",type = '" + type + '\'' +
+                        ",rated = '" + rated + '\'' +
+                        ",cast = '" + cast + '\'' +
+                        ",tomatoes = '" + tomatoes + '\'' +
+                        ",fullplot = '" + fullplot + '\'' +
+                        ",imdb = '" + imdb + '\'' +
+                        ",plot = '" + plot + '\'' +
+                        ",genres = '" + genres + '\'' +
+                        ",awards = '" + awards + '\'' +
+                        ",lastupdated = '" + lastupdated + '\'' +
+                        ",_id = '" + id + '\'' +
+                        ",poster = '" + poster + '\'' +
+                        ",released = '" + released + '\'' +
+                        "}";
+    }
+
 }

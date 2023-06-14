@@ -2,15 +2,13 @@ package com.example.spartafinalproject.model.dtos.moviessupport;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 public class Imdb{
-
-	@JsonProperty("rating")
 	private Double rating;
-
-	@JsonProperty("votes")
 	private Integer votes;
 
-	@JsonProperty("id")
+	@Field("id")
 	private Integer id;
 
 	public Double getRating(){
