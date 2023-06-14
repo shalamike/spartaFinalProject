@@ -29,6 +29,30 @@ public class Comment{
 		return date;
 	}
 
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public void setMovieId(String movieId) {
+		this.movieId = movieId;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getName(){
 		return name;
 	}
