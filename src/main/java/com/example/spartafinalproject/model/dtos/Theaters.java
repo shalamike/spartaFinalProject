@@ -10,6 +10,12 @@ public class Theaters{
 	@JsonProperty("theaterId")
 	private int theaterId;
 
+	public Theaters(int theaterId, Location location, String id) {
+		this.theaterId = theaterId;
+		this.location = location;
+		this.id = id;
+	}
+
 	@JsonProperty("location")
 	private Location location;
 
