@@ -1,71 +1,72 @@
 package com.example.spartafinalproject.model;
 
+import com.example.spartafinalproject.model.moviessupport.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.util.Date;
 import java.util.List;
 
-import com.example.spartafinalproject.model.moviessupport.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 @Document("movies")
 public class Movie {
-
 	@Id
 	@JsonProperty("_id")
 	private String id;
-
-	@JsonProperty("year")
+	private List<String> languages;
 	private Integer year;
-
-	@JsonProperty("directors")
 	private List<String> directors;
-
-	@JsonProperty("runtime")
 	private Integer runtime;
-
-	@JsonProperty("countries")
+	private List<String> writers;
 	private List<String> countries;
-
-	@JsonProperty("num_mflix_comments")
+	@Field("num_mflix_comments")
 	private Integer numMflixComments;
 
-	@JsonProperty("title")
+//	@JsonProperty("title")
 	private String title;
 
-	@JsonProperty("type")
+//	@JsonProperty("type")
 	private String type;
 
-	@JsonProperty("rated")
+//	@JsonProperty("rated")
 	private String rated;
 
-	@JsonProperty("cast")
+//	@JsonProperty("cast")
 	private List<String> cast;
 
-	@JsonProperty("tomatoes")
+//	@JsonProperty("tomatoes")
 	private Tomatoes tomatoes;
 
-	@JsonProperty("fullplot")
+//	@JsonProperty("fullplot")
 	private String fullplot;
 
-	@JsonProperty("imdb")
+//	@JsonProperty("imdb")
 	private Imdb imdb;
 
-	@JsonProperty("plot")
+//	@JsonProperty("plot")
 	private String plot;
 
-	@JsonProperty("genres")
+//	@JsonProperty("genres")
 	private List<String> genres;
 
-	@JsonProperty("awards")
+//	@JsonProperty("awards")
 	private Awards awards;
 
-	@JsonProperty("lastupdated")
+//	@JsonProperty("lastupdated")
 	private String lastupdated;
 
+//	@JsonProperty("poster")
+	private String poster;
 
-	@JsonProperty("released")
+//	@JsonProperty("released")
 	private Date released;
+
+	public List<String> getLanguages(){
+		return languages;
+	}
 
 	public Integer getYear(){
 		return year;
@@ -77,6 +78,10 @@ public class Movie {
 
 	public Integer getRuntime(){
 		return runtime;
+	}
+
+	public List<String> getWriters(){
+		return writers;
 	}
 
 	public List<String> getCountries(){
@@ -135,53 +140,39 @@ public class Movie {
 		return id;
 	}
 
+	public String getPoster(){
+		return poster;
+	}
+
 	public Date getReleased(){
 		return released;
 	}
 
-	public Movie(String id, Integer year, List<String> directors, Integer runtime, List<String> countries, Integer numMflixComments, String title, String type, String rated, List<String> cast, Tomatoes tomatoes, String fullplot, Imdb imdb, String plot, List<String> genres, Awards awards, String lastupdated, Date released) {
-		this.id = id;
-		this.year = year;
-		this.directors = directors;
-		this.runtime = runtime;
-		this.countries = countries;
-		this.numMflixComments = numMflixComments;
-		this.title = title;
-		this.type = type;
-		this.rated = rated;
-		this.cast = cast;
-		this.tomatoes = tomatoes;
-		this.fullplot = fullplot;
-		this.imdb = imdb;
-		this.plot = plot;
-		this.genres = genres;
-		this.awards = awards;
-		this.lastupdated = lastupdated;
-		this.released = released;
-	}
-
 	@Override
  	public String toString(){
-		return 
-			"Movies{" + 
-			"year = '" + year + '\'' + 
-			",directors = '" + directors + '\'' + 
-			",runtime = '" + runtime + '\'' + 
-			",countries = '" + countries + '\'' + 
-			",num_mflix_comments = '" + numMflixComments + '\'' + 
-			",title = '" + title + '\'' + 
-			",type = '" + type + '\'' + 
-			",rated = '" + rated + '\'' + 
-			",cast = '" + cast + '\'' + 
-			",tomatoes = '" + tomatoes + '\'' + 
-			",fullplot = '" + fullplot + '\'' + 
-			",imdb = '" + imdb + '\'' + 
-			",plot = '" + plot + '\'' + 
-			",genres = '" + genres + '\'' + 
-			",awards = '" + awards + '\'' + 
-			",lastupdated = '" + lastupdated + '\'' + 
-			",_id = '" + id + '\'' + 
-			",released = '" + released + '\'' + 
+		return
+			"Movie{" +
+			"languages = '" + languages + '\'' +
+			",year = '" + year + '\'' +
+			",directors = '" + directors + '\'' +
+			",runtime = '" + runtime + '\'' +
+			",writers = '" + writers + '\'' +
+			",countries = '" + countries + '\'' +
+			",num_mflix_comments = '" + numMflixComments + '\'' +
+			",title = '" + title + '\'' +
+			",type = '" + type + '\'' +
+			",rated = '" + rated + '\'' +
+			",cast = '" + cast + '\'' +
+			",tomatoes = '" + tomatoes + '\'' +
+			",fullplot = '" + fullplot + '\'' +
+			",imdb = '" + imdb + '\'' +
+			",plot = '" + plot + '\'' +
+			",genres = '" + genres + '\'' +
+			",awards = '" + awards + '\'' +
+			",lastupdated = '" + lastupdated + '\'' +
+			",_id = '" + id + '\'' +
+			",poster = '" + poster + '\'' +
+			",released = '" + released + '\'' +
 			"}";
 		}
 }

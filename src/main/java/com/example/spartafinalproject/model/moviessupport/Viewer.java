@@ -3,21 +3,15 @@ package com.example.spartafinalproject.model.moviessupport;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Viewer{
-
-	@JsonProperty("meter")
 	private Integer meter;
-
-	@JsonProperty("rating")
-	private Integer rating;
-
-	@JsonProperty("numReviews")
+	private Double rating;
 	private Integer numReviews;
 
 	public Integer getMeter(){
 		return meter;
 	}
 
-	public Integer getRating(){
+	public Double getRating(){
 		return rating;
 	}
 

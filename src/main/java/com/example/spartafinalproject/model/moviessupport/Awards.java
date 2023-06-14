@@ -3,14 +3,8 @@ package com.example.spartafinalproject.model.moviessupport;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Awards{
-
-	@JsonProperty("wins")
 	private Integer wins;
-
-	@JsonProperty("text")
 	private String text;
-
-	@JsonProperty("nominations")
 	private Integer nominations;
 
 	public Integer getWins(){

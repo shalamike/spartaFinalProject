@@ -1,5 +1,6 @@
 package com.example.spartafinalproject;
 
+import com.example.spartafinalproject.model.Movie;
 import com.example.spartafinalproject.model.repositories.CommentRepository;
 import com.example.spartafinalproject.model.repositories.MoviesRepository;
 
