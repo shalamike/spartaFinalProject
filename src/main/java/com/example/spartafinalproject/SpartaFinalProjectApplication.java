@@ -15,8 +15,11 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories
 public class SpartaFinalProjectApplication {
 
+
+    //here is a comment
     public static void main(String[] args) {
         SpringApplication.run(SpartaFinalProjectApplication.class, args);
     }
 
+    //here is another comment to avoid conflict
 }
