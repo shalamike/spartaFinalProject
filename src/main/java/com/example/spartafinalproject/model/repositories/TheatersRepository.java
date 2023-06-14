@@ -19,4 +19,7 @@ public interface TheatersRepository extends MongoRepository<Theaters, String> {
     void deleteByTheaterId(Integer id);
 
 
+
+
+
 }
