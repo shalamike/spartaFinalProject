@@ -1,6 +1,4 @@
-package com.example.spartafinalproject.model.moviessupport;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package com.example.spartafinalproject.model.dtos.moviessupport;
 
 import java.util.Date;
 
