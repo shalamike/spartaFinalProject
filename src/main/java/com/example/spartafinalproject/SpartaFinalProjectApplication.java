@@ -19,11 +19,5 @@ public class SpartaFinalProjectApplication {
         SpringApplication.run(SpartaFinalProjectApplication.class, args);
     }
     //here is another comment to avoid conflict
-    @Bean
-    CommandLineRunner runner(UsersRepository repository){
-        return args -> {
-            System.out.println(repository.findById("59b99db4cfa9a34dcd7885b7").get());
-        };
-    }
 
 }
