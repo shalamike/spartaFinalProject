@@ -11,4 +11,12 @@ public interface TheatersRepository extends MongoRepository<Theaters, String> {
 
     @Query("{id: '?0'}")
     Optional<Theaters> findById(String id);
+
+    @Query
+    Optional<Theaters>findByTheaterId(Integer id);
+
+    @Query
+    void deleteByTheaterId(Integer id);
+
+
 }
