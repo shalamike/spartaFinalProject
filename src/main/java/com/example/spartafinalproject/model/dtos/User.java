@@ -34,6 +34,29 @@ public class User {
 		return email;
 	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public User(String id, String name, String password, String email) {
+		this.password = password;
+		this.name = name;
+		this.id = id;
+		this.email = email;
+	}
+
 	@Override
  	public String toString(){
 		return 
