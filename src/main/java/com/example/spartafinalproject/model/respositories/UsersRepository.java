@@ -9,8 +9,8 @@ import java.util.Optional;
 
 
 public interface UsersRepository extends MongoRepository<User, String> {
-    @Query("{id: '?0'}")
-    User findUserById(String id);
+//    @Query("{id: '?0'}")
+//    User findUserById(String id);
 
 
 }
