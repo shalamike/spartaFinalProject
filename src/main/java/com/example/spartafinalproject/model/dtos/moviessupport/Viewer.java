@@ -1,6 +1,5 @@
 package com.example.spartafinalproject.model.dtos.moviessupport;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Viewer{
 	private Integer meter;

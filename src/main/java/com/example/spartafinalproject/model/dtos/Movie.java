@@ -246,4 +246,5 @@ public class Movie {
                         ",released = '" + released + '\'' +
                         "}";
     }
+
 }

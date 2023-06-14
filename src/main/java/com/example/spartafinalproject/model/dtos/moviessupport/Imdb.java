@@ -1,6 +1,7 @@
 package com.example.spartafinalproject.model.dtos.moviessupport;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.springframework.data.mongodb.core.mapping.Field;
 
 public class Imdb{
