@@ -85,6 +85,22 @@ public class TheaterController {
         }
     }
 
+    @DeleteMapping(value = "/theater/{id}")
+    public ResponseEntity<String>deleteById(@PathVariable String id){
+        Optional<Theaters> theaterToDelete = theatersRepository.findById(id);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("content-type", "application/json");
+        if (theaterToDelete.isPresent()){
+            ResponseEntity<String> response = new ResponseEntity<>("Theater deleted", httpHeaders, HttpStatus.OK);
+            theatersRepository.deleteById(id);
+            return response;
+        }
+        else {
+            ResponseEntity<String> theaterNotFoundResponse = new ResponseEntity<>("{\"message\":\"Theater to delete doesnt exist\"}", httpHeaders, HttpStatus.BAD_REQUEST);
+            return theaterNotFoundResponse;
+        }
+    }
+
 
     private ResponseEntity<String> getStringResponseEntity(List<Theaters> theaters) {
         new HttpHeaders().add("content-type", "application/json");
