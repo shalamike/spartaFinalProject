@@ -1,4 +1,4 @@
-package com.example.spartafinalproject.model.userssupport;
+package com.example.spartafinalproject.model.dtos.sessionssupport;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

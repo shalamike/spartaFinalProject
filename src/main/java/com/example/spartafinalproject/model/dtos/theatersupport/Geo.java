@@ -1,4 +1,4 @@
-package com.example.spartafinalproject.model.theatersupport;
+package com.example.spartafinalproject.model.dtos.theatersupport;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;

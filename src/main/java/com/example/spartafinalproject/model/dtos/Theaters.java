@@ -1,5 +1,6 @@
-package com.example.spartafinalproject.model.theatersupport;
+package com.example.spartafinalproject.model.dtos;
 
+import com.example.spartafinalproject.model.dtos.theatersupport.Location;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
 
