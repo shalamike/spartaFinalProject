@@ -1,4 +1,4 @@
-package com.example.spartafinalproject.model;
+package com.example.spartafinalproject.model.moviessupport;
 
 import java.util.Date;
 import java.util.List;
