@@ -5,6 +5,7 @@ import com.example.spartafinalproject.model.repositories.MoviesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -18,7 +19,16 @@ public class MovieServices {
         this.repository = repository;
     }
     //read
-
+    public boolean doesMovieExist(Movie movie){
+        if(movie.getId()==null){
+            return false;
+        }
+        Optional<Movie> existingMovie=repository.findMovieById(movie.getId());
+        if(existingMovie.isEmpty()){
+            return false;
+        }
+        return existingMovie.get().getId().equals(movie.getId());
+    }
     public Movie updateMovie(Movie movieUpdates, Movie foundMovie){
         updateMovieByID(movieUpdates, foundMovie);
         updateMovieByTitle(movieUpdates, foundMovie);
