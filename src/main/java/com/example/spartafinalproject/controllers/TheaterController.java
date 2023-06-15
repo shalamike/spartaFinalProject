@@ -11,13 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/theaters/")
+@RequestMapping("/api/theaters/")
 public class TheaterController {
 
     private TheatersRepository theatersRepository;
@@ -43,99 +41,74 @@ public class TheaterController {
     }
 
     @GetMapping("theaterId/{theaterId}")
-    public ResponseEntity<String>getTheaterByTheaterId(@PathVariable int theaterId){
+    public ResponseEntity<?>getTheaterByTheaterId(@PathVariable int theaterId){
         Optional<Theaters> theater = theatersRepository.findByTheaterId(theaterId);
-        List<Theaters> theaters = new ArrayList<>();
-        theaters.add(theater.get());
-        return getStringResponseEntity(theaters);
+        if (theater.isPresent())
+            return new ResponseEntity<>(theater.get(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>("No theater with theaterId " + theaterId + " found", HttpStatus.OK);
     }
 
     @GetMapping(value = "id/{id}")
-    public ResponseEntity<String>getTheaterByIdString(@PathVariable String id){
+    public ResponseEntity<?>getTheaterByIdString(@PathVariable String id){
         Optional<Theaters> theater = theatersRepository.findById(id);
-        List<Theaters> theaters = new ArrayList<>();
-        theaters.add(theater.get());
-        return getStringResponseEntity(theaters);
+        if (theater.isPresent())
+            return new ResponseEntity<>(theater.get(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>("No theater with id " + id + " found", HttpStatus.OK);
+
     }
 
     @PostMapping(value = "")
-    public ResponseEntity<String> addTheater(@RequestBody Theaters theater){
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("content-type", "application/json");
-        if (theatersRepository.existsById(theater.getId())) {
-            ResponseEntity<String> response = new ResponseEntity<>("theater already exist and cannot be added", httpHeaders, HttpStatus.CONFLICT);
-            return response;
-        } else {
-            ResponseEntity<String> theaterCreatedResponse = new ResponseEntity<>("{\"message\":\"new theater added\"}", httpHeaders, HttpStatus.OK);
-            theatersRepository.save(theater);
-            return theaterCreatedResponse;
-        }
+    public ResponseEntity<?> addTheater(@RequestBody Theaters theater){
+        if(!theatersRepository.existsById(theater.getId()) && theatersRepository.findByTheaterId(theater.getTheaterId()).isEmpty())
+            return new ResponseEntity<>(theatersRepository.save(theater), HttpStatus.CREATED);
+        else
+            return new ResponseEntity<>("A Theater with this ID already exists!", HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping(value = "theatherid/{theaterid}")
-    public ResponseEntity<String> updateTheaterByTheaterId(@PathVariable Integer theaterid, @RequestBody Theaters theater){
-        Optional<Theaters> theaterToUpdate = theatersRepository.findByTheaterId(theaterid);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("content-type", "application/json");
-        return getStringResponseEntityForPut(theater, theaterToUpdate, httpHeaders);
+    @PutMapping(value = "theaterid/{id}")
+    public ResponseEntity<?> updateTheaterByTheaterId(@PathVariable Integer id, @RequestBody Theaters theater){
+        Optional<Theaters> theaterToUpdate = theatersRepository.findByTheaterId(id);
+        if(theaterToUpdate.isPresent())
+            return new ResponseEntity<>(theatersRepository.save(theater), HttpStatus.CREATED);
+        else
+            return new ResponseEntity<>("A Theater with this ID doesnt exist, Use Post to create one", HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(value = "id/{id}")
-    public ResponseEntity<String> updateTheaterById(@PathVariable String id, @RequestBody Theaters theater){
-        Optional<Theaters> theaterToUpdate = theatersRepository.findById(id);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("content-type", "application/json");
-        return getStringResponseEntityForPut(theater, theaterToUpdate, httpHeaders);
+    public ResponseEntity<?> updateTheaterById(@PathVariable String id, @RequestBody Theaters theater){
+        if(theatersRepository.existsById(id))
+            return new ResponseEntity<>(theatersRepository.save(theater), HttpStatus.CREATED);
+        else
+            return new ResponseEntity<>("A Theater with this ID doesnt exist, Use Post to create one", HttpStatus.BAD_REQUEST);
     }
 
 
     @DeleteMapping(value = "id/{id}")
-    public ResponseEntity<String>deleteById(@PathVariable String id){
+    public ResponseEntity<?>deleteById(@PathVariable String id){
         Optional<Theaters> theaterToDelete = theatersRepository.findById(id);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("content-type", "application/json");
         if (theaterToDelete.isPresent()){
-            ResponseEntity<String> response = new ResponseEntity<>("Theater deleted", httpHeaders, HttpStatus.OK);
             theatersRepository.deleteById(id);
-            return response;
+            return new ResponseEntity<>("Theater deleted",  HttpStatus.OK);
         }
         else {
-            ResponseEntity<String> theaterNotFoundResponse = new ResponseEntity<>("{\"message\":\"Theater to delete doesnt exist\"}", httpHeaders, HttpStatus.BAD_REQUEST);
-            return theaterNotFoundResponse;
+            return new ResponseEntity<>("No theater found to delete", HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping(value = "theaterid/{id}")
     public ResponseEntity<String>deleteBytheaterId(@PathVariable Integer id){
         Optional<Theaters> theaterToDelete = theatersRepository.findByTheaterId(id);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("content-type", "application/json");
         if (theaterToDelete.isPresent()){
-            ResponseEntity<String> response = new ResponseEntity<>("Theater deleted", httpHeaders, HttpStatus.OK);
             theatersRepository.deleteByTheaterId(id);
-            return response;
+            return new ResponseEntity<>("Theater deleted",  HttpStatus.OK);
         }
         else {
-            ResponseEntity<String> theaterNotFoundResponse = new ResponseEntity<>("{\"message\":\"Theater to delete doesnt exist\"}", httpHeaders, HttpStatus.BAD_REQUEST);
-            return theaterNotFoundResponse;
+            return new ResponseEntity<>("No theater found to delete", HttpStatus.BAD_REQUEST);
         }
     }
 
-    private ResponseEntity<String> getStringResponseEntityForPut(@RequestBody Theaters theater, Optional<Theaters> theaterToUpdate, HttpHeaders httpHeaders) {
-        if (theaterToUpdate.isPresent()){
-            ResponseEntity<String> response = new ResponseEntity<>("Theater updated", httpHeaders, HttpStatus.OK
-            );
-            Theaters updatedTheater = theaterToUpdate.get();
-            updatedTheater.setLocation(theater.getLocation());
-            updatedTheater.setId(theater.getId());
-            theatersRepository.save(updatedTheater);
-            return  response;
-        }
-        else {
-            ResponseEntity<String> theaterNotFoundResponse = new ResponseEntity<>("{\"message\":\"Theater doesnt exist. Use Post to create one instead\"}", httpHeaders, HttpStatus.BAD_REQUEST);
-            return theaterNotFoundResponse;
-        }
-    }
 
     private ResponseEntity<String> getStringResponseEntity(List<Theaters> theaters) {
         new HttpHeaders().add("content-type", "application/json");
@@ -152,11 +125,10 @@ public class TheaterController {
                 e.printStackTrace();
             }
         }
-        ResponseEntity<String> theaterNotFound = new ResponseEntity<>(
+        return new ResponseEntity<>(
                 "{\"message\":\"This Theater doesnt exist\"}",
                 new HttpHeaders(),
                 HttpStatus.NOT_FOUND);
-        return theaterNotFound;
     }
 
 }
