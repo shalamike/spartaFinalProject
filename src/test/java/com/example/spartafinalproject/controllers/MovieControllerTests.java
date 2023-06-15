@@ -2,8 +2,7 @@ package com.example.spartafinalproject.controllers;
 
 import com.example.spartafinalproject.model.dtos.Movie;
 import com.example.spartafinalproject.repositories.MoviesRepositoryTests;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -11,11 +10,13 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MovieControllerTests {
     @Autowired
     WebTestClient webTestClient;
 
     @Test
+    @Order(1)
     @DisplayName("Testing createMovie response")
     void testCreateMovie(){
         Movie movie = MoviesRepositoryTests.getMovie();
@@ -36,6 +37,7 @@ public class MovieControllerTests {
     }
 
     @Test
+    @Order(2)
     @DisplayName("Testing getMovieById response")
     void testGetMovieById(){
         webTestClient.get()
@@ -51,6 +53,7 @@ public class MovieControllerTests {
     }
 
     @Test
+    @Order(3)
     @DisplayName("Testing updateMovie response")
     void testUpdateMovie(){
         Movie movieUpdates = MoviesRepositoryTests.getMovie();
@@ -73,6 +76,7 @@ public class MovieControllerTests {
     }
 
     @Test
+    @Order(4)
     @DisplayName("Testing deleteMovieById response")
     void testDeleteMovieById(){
         webTestClient.delete()
