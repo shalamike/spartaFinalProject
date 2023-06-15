@@ -1,6 +1,7 @@
 package com.example.spartafinalproject.repositories;
 
 import com.example.spartafinalproject.model.dtos.Comment;
+import com.example.spartafinalproject.model.repositories.CommentsRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
