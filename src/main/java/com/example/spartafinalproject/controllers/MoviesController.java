@@ -27,7 +27,7 @@ public class MoviesController {
         this.services = services;
     }
 
-    @PostMapping("/movie")
+    @PostMapping("/movie")//create
     public ResponseEntity<?> createMovie(@Valid @RequestBody Movie movie) {
         try {
             Movie addedMovie = repository.save(movie);//throws MethodArgumentNotValidException if one of the NotNull fields are violated
@@ -37,6 +37,7 @@ public class MoviesController {
         }
     }
 
+    //read
     @GetMapping("/movie/{id}")
     public ResponseEntity<?> getMovieById(@PathVariable("id") String id) {
         Optional<Movie> movie = repository.findMovieById(id);
@@ -60,6 +61,7 @@ public class MoviesController {
         }
     }
 
+    //update
     @PutMapping("/movie/{id}")
     public ResponseEntity<?> updateMovie(@PathVariable("id") String id, @RequestBody Movie movieUpdates) {
         Optional<Movie> movie = repository.findMovieById(id);
@@ -74,7 +76,7 @@ public class MoviesController {
         }
     }
 
-
+    //delete
     @DeleteMapping("/movie/{id}")
     public ResponseEntity<?> deleteMovieById(@PathVariable("id") String id) {
         Optional<Movie> movie = repository.findMovieById(id);
