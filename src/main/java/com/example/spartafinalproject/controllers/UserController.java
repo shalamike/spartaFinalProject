@@ -3,6 +3,8 @@ import com.example.spartafinalproject.model.dtos.User;
 import com.example.spartafinalproject.model.repositories.UsersRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 import java.util.Optional;
 
@@ -29,6 +31,10 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User newUser) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(newUser.getPassword());
+        newUser.setPassword(hashedPassword);
+
         User savedUser = usersRepository.save(newUser);
         return ResponseEntity.ok(savedUser);
     }
