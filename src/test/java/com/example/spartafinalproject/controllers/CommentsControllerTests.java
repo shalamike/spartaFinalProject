@@ -45,10 +45,7 @@ public class CommentsControllerTests {
         MultiValueMap<String, String> bodyValues = new LinkedMultiValueMap<>();
         bodyValues.add("text", "On second thoughts, I disliked it. 2/10");
 
-        webTestClient.put().uri(uriBuilder -> uriBuilder
-                .path("/comment")
-                .queryParam("id", "testID123")
-                .build())
+        webTestClient.put().uri("/comment/{id}", "testID123")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(bodyValues))
@@ -62,10 +59,7 @@ public class CommentsControllerTests {
     @Order(3)
     @DisplayName("Check that a comment can be successfully deleted")
     public void deleteComment() {
-        webTestClient.delete().uri(uriBuilder -> uriBuilder
-                .path("/comment")
-                .queryParam("id", "successfulID12345")
-                .build())
+        webTestClient.delete().uri("/comment/{id}", "successfulID12345")
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -82,10 +76,7 @@ public class CommentsControllerTests {
     @Test
     @DisplayName("Check that comments for an existing movie can be returned")
     public void getCommentsForMovie() {
-        webTestClient.get().uri(uriBuilder -> uriBuilder
-                .path("/comments/movie")
-                .queryParam("id", "573a1390f29313caabcd4135")
-                .build())
+        webTestClient.get().uri("/comments/movie/{id}", "573a1390f29313caabcd4135")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Comment.class);
@@ -94,10 +85,7 @@ public class CommentsControllerTests {
     @Test
     @DisplayName("Check that no comments are returned for a movie with an invalid ID")
     public void getCommentsForInvalidMovie() {
-        webTestClient.get().uri(uriBuilder -> uriBuilder
-                .path("/comments/movie")
-                .queryParam("id", "573a1390f29313caabcd56df")
-                .build())
+        webTestClient.get().uri("/comments/movie/{id}", "573a1390f29313caabcd56df")
                 .exchange()
                 .expectStatus().isNoContent();
     }
@@ -105,10 +93,7 @@ public class CommentsControllerTests {
     @Test
     @DisplayName("Check that a comment isn't returned when requesting with an invalid ID")
     public void getCommentWithInvalidId() {
-        webTestClient.get().uri(uriBuilder -> uriBuilder
-                .path("/comment")
-                .queryParam("id", "randomID12345")
-                .build())
+        webTestClient.get().uri("/comments/movie/{id}", "randomID12345")
                 .exchange()
                 .expectStatus().isBadRequest();
     }
@@ -116,10 +101,7 @@ public class CommentsControllerTests {
     @Test
     @DisplayName("Check that a comment is returned when requesting with a valid ID")
     public void getCommentWithValidId() {
-        webTestClient.get().uri(uriBuilder -> uriBuilder
-                .path("/comment")
-                .queryParam("id", "5a9427648b0beebeb69579e7")
-                .build())
+        webTestClient.get().uri("/comment/{id}","5a9427648b0beebeb69579e7")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -145,10 +127,7 @@ public class CommentsControllerTests {
     @Test
     @DisplayName("Check that deleting a comment fails when using an invalid ID")
     public void deleteCommentWithInvalidID() {
-        webTestClient.delete().uri(uriBuilder -> uriBuilder
-                .path("/comment")
-                .queryParam("id", "nonExistentID123")
-                .build())
+        webTestClient.delete().uri("/comment/{id}", "nonExistentID123")
                 .exchange()
                 .expectStatus().isBadRequest();
     }
