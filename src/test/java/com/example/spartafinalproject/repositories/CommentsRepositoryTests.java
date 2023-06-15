@@ -6,10 +6,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
+import java.util.NoSuchElementException;
 
+@AutoConfigureDataMongo
 @SpringBootTest
 public class CommentsRepositoryTests {
 
@@ -21,6 +24,15 @@ public class CommentsRepositoryTests {
     void checkFindCommentByValidId() {
         Comment comment = commentsRepository.findById("5a9427648b0beebeb69579e7").get();
         Assertions.assertNotNull(comment);
+    }
+
+    @Test
+    @DisplayName("Check that a comment can't be returned when requesting to find a comment with an invalid ID")
+    void checkFindCommentByInvalidId() {
+        try {
+            Comment comment = commentsRepository.findById("invalidId321").get();
+        } catch (NoSuchElementException ignored) {
+        }
     }
 
     @Test
