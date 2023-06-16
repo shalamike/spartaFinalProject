@@ -33,5 +33,15 @@ public class MovieServicesTests {
 
         Optional<Movie> result = moviesRepository.findById(oldMovie.getId());
         Assertions.assertEquals(updatedMovie.getTitle(),result.get().getTitle());
+        moviesRepository.deleteById(updatedMovie.getId());
+    }
+
+    @Test
+    @DisplayName("Test doesMovieExist method")
+    void testDoesMovieExist(){
+        Movie movie = MoviesRepositoryTests.getMovie();
+        moviesRepository.save(movie);
+        Assertions.assertTrue(movieServices.doesMovieExist(movie));
+        moviesRepository.deleteById(movie.getId());
     }
 }

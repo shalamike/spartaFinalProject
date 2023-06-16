@@ -18,7 +18,7 @@ public class MovieServices {
     public MovieServices(MoviesRepository repository) {
         this.repository = repository;
     }
-    //read
+
     public boolean doesMovieExist(Movie movie){
         if(movie.getId()==null){
             return false;
@@ -50,7 +50,7 @@ public class MovieServices {
         updateByAwards(movieUpdates, foundMovie);
         updateByLastupdated(movieUpdates, foundMovie);
         updateByPoster(movieUpdates, foundMovie);
-        updateByReleased(movieUpdates, foundMovie); //throws HttpMessageNotReadableException when date isnt entered correctly
+        updateByReleased(movieUpdates, foundMovie);
 
         return repository.save(foundMovie);
     }

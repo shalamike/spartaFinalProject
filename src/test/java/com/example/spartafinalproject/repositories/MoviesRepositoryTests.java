@@ -3,9 +3,7 @@ package com.example.spartafinalproject.repositories;
 import com.example.spartafinalproject.model.dtos.Movie;
 import com.example.spartafinalproject.model.repositories.MoviesRepository;
 import com.example.spartafinalproject.model.services.MovieServices;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MoviesRepositoryTests {
     @Autowired
     MoviesRepository moviesRepository;
@@ -24,6 +23,7 @@ public class MoviesRepositoryTests {
     }
 
     @Test
+    @Order(1)
     @DisplayName("Testing findMovieById method")
     void testFindMovieById(){
         Movie movie = getMovie();
@@ -33,6 +33,7 @@ public class MoviesRepositoryTests {
     }
 
     @Test
+    @Order(2)
     @DisplayName("Testing findMovieByTitleContaining method")
     void testFindMovieByTitleContaining(){
         Movie movie = getMovie();
@@ -42,6 +43,7 @@ public class MoviesRepositoryTests {
     }
 
     @Test
+    @Order(3)
     @DisplayName("Testing deleteById method")
     void testDeleteById(){
         Movie movie = getMovie();

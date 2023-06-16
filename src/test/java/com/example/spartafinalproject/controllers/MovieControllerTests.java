@@ -51,9 +51,23 @@ public class MovieControllerTests {
                 .jsonPath("$.type").isEqualTo("movie")
                 .jsonPath("$.numMflixComments").isEqualTo(0);
     }
-
     @Test
     @Order(3)
+    @DisplayName("Testing getMovieByTitle response")
+    void testGetMovieByTitle(){
+        Movie movie = MoviesRepositoryTests.getMovie();
+        webTestClient.get()
+                .uri("movie/title/{title}",movie.getTitle())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Movie.class);
+
+    }
+
+
+
+    @Test
+    @Order(4)
     @DisplayName("Testing updateMovie response")
     void testUpdateMovie(){
         Movie movieUpdates = MoviesRepositoryTests.getMovie();
@@ -76,7 +90,7 @@ public class MovieControllerTests {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     @DisplayName("Testing deleteMovieById response")
     void testDeleteMovieById(){
         webTestClient.delete()
