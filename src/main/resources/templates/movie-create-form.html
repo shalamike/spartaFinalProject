@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Movie</title>
+    <meta name="author" content="L. Murphy-Delgado"/>
+    <meta name="description" content="This is a form to add a movie to the database"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="container pt-3">
+    <h1>Create Movie Form</h1>
+    <form th:action="@{/web/movie/create}" th:object="${movieToCreate}" method="post">
+        <section class="was-validated">
+            <div class="mb-3 mt-3">
+                <label for="title">Title:</label>
+                <input type="text" placeholder="The Land Beyond the Sunset" class="form-control" id="title" name="title"
+                       th:field="*{title}" required/>
+                <div class="invalid-feedback">Please fill out this field</div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="year">Year:</label>
+                <input type="number" placeholder="1912" class="form-control" min="0" id="year" name="year"
+                       th:field="*{year}" required/>
+                <div class="invalid-feedback">Please fill out this field</div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="type">Type:</label>
+                <input type="text" placeholder="movie" class="form-control" id="type" name="type" th:field="*{type}"
+                       required/>
+                <div class="invalid-feedback">Please fill out this field</div>
+            </div>
+        </section>
+        <button type="button" class="btn btn-outline-success" data-bs-toggle="collapse" data-bs-target="#demo">More
+            details
+        </button>
+        <div id="demo" class="collapse">
+            <div class="mb-3 mt-3">
+                <label for="id">ID:</label>
+                <input type="text" placeholder="573a1390f29313caabcd4323" class="form-control" id="id" name="id"
+                       th:field="*{id}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="directors">Directors:</label>
+                <input type="text" placeholder="Harold M. Shaw, Jordan Peele" class="form-control" id="directors"
+                       name="directors" th:field="*{directors}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="cast">Cast:</label>
+                <input type="text" placeholder="Martin Fuller, Mrs. William Bechtel, Walter Edwin, Ethel Jewett"
+                       class="form-control" id="cast" name="cast" th:field="*{cast}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="languages">Languages:</label>
+                <input type="text" placeholder="English, French" class="form-control" id="languages" name="languages"
+                       th:field="*{languages}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="genres">Genres:</label>
+                <input type="text" placeholder="Short, Drama, Fantasy" class="form-control" id="genres" name="genres"
+                       th:field="*{genres}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="poster">Poster:</label>
+                <input type="text" placeholder="https://m.media-amazon.com/images/M/MV5BM..." class="form-control"
+                       id="poster"
+                       name="poster" th:field="*{poster}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="writers">Writers:</label>
+                <input type="text" placeholder="Dorothy G. Shore, Shonda Rhimes" class="form-control" id="writers"
+                       name="writers" th:field="*{writers}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="countries">Countries:</label>
+                <input type="text" placeholder="USA, France" class="form-control" id="countries"
+                       name="countries" th:field="*{countries}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="rated">Rating:</label>
+                <input type="text" placeholder="PG" class="form-control" id="rated"
+                       name="rated" th:field="*{rated}"/>
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="plot">Plot:</label>
+                <input type="text" placeholder="A young boy, opressed by his mother..." class="form-control" id="plot"
+                       name="plot" th:field="*{plot}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="fullplot">Full Plot:</label>
+                <textarea type="text" placeholder="Thanks to the Fresh Air Fund, a slum child..." class="form-control"
+                          rows="4" id="fullplot" name="fullplot"
+                          th:field="*{fullplot}"></textarea>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="lastUpdated">Last Updated:</label>
+                <input type="text" placeholder="2015-08-29 00:27:45.437000000" class="form-control" id="lastUpdated"
+                       name="lastUpdated" th:field="*{lastupdated}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="released">Released:</label>
+                <input type="datetime-local" placeholder="1912-10-28T00:00:00.000+00:00" class="form-control"
+                       id="released"
+                       name="released" th:field="*{released}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="runtime">Runtime:</label>
+                <input type="number" placeholder="0" min=0 class="form-control" id="runtime" name="runtime"
+                       th:field="*{runtime}"/>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="numMflixComments">Number of Mflix Comments:</label>
+                <input type="number" placeholder="0" min=0 class="form-control" id="numMflixComments"
+                       name="numMflixComments"
+                       th:field="*{numMflixComments}"/>
+            </div>
+            <label for="imdb">IMDB:</label>
+            <section id="imdb">
+                <div class="mb-3 mt-3 input-group">
+                    <span class="input-group-text">ID:</span>
+                    <input type="number" min="0" placeholder="0"
+                           class="form-control" id="imdbId"
+                           name="imdbId" th:field="*{imdb.id}"/>
+                </div>
+                <div class="mb-3 mt-3 input-group">
+                    <span class="input-group-text">Rating:</span>
+                    <input type="number" min="0" step="0.1" placeholder="0.0"
+                           class="form-control" id="imdbRating"
+                           name="imdbRating" th:field="*{imdb.rating}"/>
+                </div>
+                <div class="mb-3 mt-3 input-group">
+                    <span class="input-group-text">Votes:</span>
+                    <input type="number" min="0" placeholder="0"
+                           class="form-control" id="imdbVotes"
+                           name="imdbVotes" th:field="*{imdb.votes}"/>
+                </div>
+            </section>
+            <label for="awards">Awards:</label>
+            <section id="awards">
+                <div class="mb-3 mt-3 input-group">
+                    <span class="input-group-text">Nominations:</span>
+                    <input type="number" min="0" placeholder="0"
+                           class="form-control" id="nominations"
+                           name="nominations" th:field="*{awards.nominations}"/>
+                </div>
+                <div class="mb-3 mt-3 input-group">
+                    <span class="input-group-text">Wins:</span>
+                    <input type="number" min="0" placeholder="0"
+                           class="form-control" id="wins"
+                           name="wins" th:field="*{awards.wins}"/>
+                </div>
+                <div class="mb-3 mt-3 input-group">
+                    <span class="input-group-text">Text:</span>
+                    <input type="text" min="0" placeholder="1 win."
+                           class="form-control" id="text"
+                           name="text" th:field="*{awards.text}"/>
+                </div>
+            </section>
+            <h5>Tomatoes:</h5>
+            <label for="viewers">Viewer:</label>
+            <section id="viewers">
+                <div class="mb-3 mt-3 input-group">
+                    <span class="input-group-text">Meter:</span>
+                    <input type="number" min="0" placeholder="0"
+                           class="form-control" id="meter"
+                           name="meter" th:field="*{tomatoes.viewer.meter}"/>
+                </div>
+                <div class="mb-3 mt-3 input-group">
+                    <span class="input-group-text">Rating:</span>
+                    <input type="number" min="0" step="0.1" placeholder="0.0"
+                           class="form-control" id="rating"
+                           name="rating" th:field="*{tomatoes.viewer.rating}"/>
+                </div>
+                <div class="mb-3 mt-3 input-group">
+                    <span class="input-group-text">Number of Reviews:</span>
+                    <input type="number" min="0" placeholder="0"
+                           class="form-control" id="numReviews"
+                           name="numReviews" th:field="*{tomatoes.viewer.numReviews}"/>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="tomatoesLastUpdated">Last Updated:</label>
+                    <input type="datetime-local" placeholder="2015-04-27T19:06:35.000+00:00" class="form-control"
+                           id="tomatoesLastUpdated"
+                           name="tomatoesLastUpdated" th:field="*{tomatoes.lastUpdated}"/>
+                </div>
+            </section>
+        </div>
+        <input type="submit" class="btn btn-outline-success" value="Create">
+    </form>
+</div>
+</body>
+</html>

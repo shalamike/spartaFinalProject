@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies</title>
+    <meta name="author" content="L. Murphy-Delgado"/>
+    <meta name="description" content="This page shows the list of movies that contain the title entered"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+</head>
+<body>
+    <h1>Movie Details</h1>
+<table class="table table-hover">
+    <thread>
+        <tr class="table-dark">
+            <th>Title</th>
+            <th>Year</th>
+            <th>Type</th>
+            <th>Cast</th>
+            <th>Plot</th>
+            <th>Delete</th>
+            <th>Poster</th>
+        </tr>
+    </thread>
+    <tbody>
+    <tr th:each="movie:${movies}" class="align-top">
+        <td th:text="${movie.title}"></td>
+        <td th:text="${movie.year}"></td>
+        <td th:text="${movie.type}"></td>
+        <td><ul class="list-group list-group-flush" th:each="member:${movie.cast}">
+            <li class="list-group-item " th:text="${member}"></li>
+        </ul></td>
+        <td th:text="${movie.plot}"></td>
+        <td><a th:href="@{/web/movie/delete/{id}(id=${movie.id})}" class="btn btn-danger btn-sm py-1" th:data-confirm-delete="|Are you sure you want to delete this movie?|" onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Delete</a><td>
+        <td th:if="${movie.poster!=null}"><a th:href="${movie.poster}">See poster</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
