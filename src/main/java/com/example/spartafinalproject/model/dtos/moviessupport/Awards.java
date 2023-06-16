@@ -20,6 +20,18 @@ public class Awards{
 		return nominations;
 	}
 
+	public void setWins(Integer wins) {
+		this.wins = wins;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public void setNominations(Integer nominations) {
+		this.nominations = nominations;
+	}
+
 	@Override
  	public String toString(){
 		return 

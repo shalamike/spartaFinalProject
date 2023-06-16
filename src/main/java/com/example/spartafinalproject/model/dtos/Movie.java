@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -42,6 +43,7 @@ public class Movie {
     private Awards awards;
     private String lastupdated;
     private String poster;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date released;
 
     public Movie() {

@@ -18,6 +18,18 @@ public class Viewer{
 		return numReviews;
 	}
 
+	public void setMeter(Integer meter) {
+		this.meter = meter;
+	}
+
+	public void setRating(Double rating) {
+		this.rating = rating;
+	}
+
+	public void setNumReviews(Integer numReviews) {
+		this.numReviews = numReviews;
+	}
+
 	@Override
  	public String toString(){
 		return 
