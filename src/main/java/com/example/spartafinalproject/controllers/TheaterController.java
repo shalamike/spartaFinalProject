@@ -40,13 +40,13 @@ public class TheaterController {
         }
     }
 
-    @GetMapping("theaterId/{theaterId}")
-    public ResponseEntity<?>getTheaterByTheaterId(@PathVariable int theaterId){
-        Optional<Theaters> theater = theatersRepository.findByTheaterId(theaterId);
+    @GetMapping("theaterid/{theaterid}")
+    public ResponseEntity<?>getTheaterByTheaterId(@PathVariable int theaterid){
+        Optional<Theaters> theater = theatersRepository.findByTheaterId(theaterid);
         if (theater.isPresent())
             return new ResponseEntity<>(theater.get(), HttpStatus.OK);
         else
-            return new ResponseEntity<>("No theater with theaterId " + theaterId + " found", HttpStatus.OK);
+            return new ResponseEntity<>("No theater with theaterId " + theaterid + " found", HttpStatus.OK);
     }
 
     @GetMapping(value = "id/{id}")
@@ -104,11 +104,11 @@ public class TheaterController {
         }
     }
 
-    @DeleteMapping(value = "theaterid/{id}")
-    public ResponseEntity<String>deleteBytheaterId(@PathVariable Integer id){
-        Optional<Theaters> theaterToDelete = theatersRepository.findByTheaterId(id);
+    @DeleteMapping(value = "theaterid/{theaterid}")
+    public ResponseEntity<String>deleteBytheaterId(@PathVariable Integer theaterid){
+        Optional<Theaters> theaterToDelete = theatersRepository.findByTheaterId(theaterid);
         if (theaterToDelete.isPresent()){
-            theatersRepository.deleteByTheaterId(id);
+            theatersRepository.deleteByTheaterId(theaterid);
             return new ResponseEntity<>("Theater deleted",  HttpStatus.OK);
         }
         else {
