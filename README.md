@@ -124,7 +124,7 @@ The following table shows the endpoints available relating to the `comments` col
 | PUT | /api/comment/{id} | To update a comment, provide its `id` as a path variable, then specify the field to be updated in the request body (see JSON format below)|
 | DELETE | /api/comment/{id} | To delete a comment by its `id` |
 
-JSON format for a comment:
+NOTE: The following JSON shows an example of the format for creating a new comment. An ID must be specified.
 ```
 {
   "date": "1985-02-24T20:04:25.000+00:00",
