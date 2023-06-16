@@ -23,6 +23,18 @@ public class Imdb{
 		return id;
 	}
 
+	public void setRating(Double rating) {
+		this.rating = rating;
+	}
+
+	public void setVotes(Integer votes) {
+		this.votes = votes;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@Override
  	public String toString(){
 		return 

@@ -41,7 +41,6 @@ public class MoviesController {
         }
     }
 
-
     @GetMapping("/movie/{id}")
     public ResponseEntity<?> getMovieById(@PathVariable("id") String id) {
         Optional<Movie> movie = repository.findMovieById(id);
