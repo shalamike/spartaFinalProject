@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Theater Edit Form</h1>
+<form th:action = "@{/web/theaters/update}" th:object="${theaterToUpdate}" method="post">
+<!--    <label for="id">ID</label>-->
+<!--    <input type = "text" id = "id" th:field="*{id}"/>-->
+<!--    <input type = "number" theaterId = "theaterId" th:field = "*{theaterId}">-->
+    <label for="zipcode">ZipCode</label>
+    <input type = "String" id = "zipcode" th:field = "${theaterToUpdate.get().location.address.zipcode}">
+    <label for="city">City</label>
+    <input type = "String" id = "city" th:field = "${theaterToUpdate.get().location.address.city}">
+    <label for="street1">Street</label>
+    <input type = "String" id = "street1" th:field = "${theaterToUpdate.get().location.address.street1}">
+    <label for="state">State</label>
+    <input type = "String" id = "state" th:field = "${theaterToUpdate.get().location.address.state}">
+    <input type="submit" value="Update"/>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<span th:if="${theaters == null}">Theater Not found</span>
+<span th:unless ="${theaters==null}">
+  <table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Theater ID</th>
+    <th>City</th>
+    <th>ZipCode</th>
+    <th>State</th>
+  </tr>
+  </thead>
+  <tr >
+    <td th:text="${theaters.get().id}"></td>
+    <td th:text="${theaters.get().theaterId}"></td>
+    <td th:text="${theaters.get().location.address.city}"></td>
+    <td th:text="${theaters.get().location.address.zipcode}"></td>
+    <td th:text="${theaters.get().location.address.state}"></td>
+  </tr>
+</table>
+</span>
+
+</body>
+</html>
