@@ -114,7 +114,28 @@ json format for theater
 
 
 ### Comments
-### Sessions
+The following table shows the endpoints available relating to the `comments` collection:
+| HTTP Verbs  | Endpoints | Action |
+| ----------- | --------- |  ----- |
+| POST | /api/comment | To create a new comment, submit the entry via the request body, see JSON format for entries below |
+| GET | /api/comment/{id} | To retrieve a comment by its `id` |
+| GET | /api/comments | To retrieve all comments |
+| GET | /api/comments/movie/{id} | To retrieve all comments for a particular movie, by the movie's `id` |
+| PUT | /api/comment/{id} | To update a comment, provide its `id` as a path variable, then specify the field to be updated in the request body (see JSON format below)|
+| DELETE | /api/comment/{id} | To delete a comment by its `id` |
+
+JSON format for a comment:
+```
+{
+  "date": "1985-02-24T20:04:25.000+00:00",
+  "name": "Ellaria Sand",
+  "_id": "5a9427648b0beebeb6957bb6",
+  "text": "Quidem nesciunt quam atque officia vel laboriosam. Ipsam vel placeat dignissimos. Quo pariatur dolore deleniti impedit.",
+  "movie_id": null,
+  "email": "indira_varma@gameofthron.es"
+}
+```
+
 ### Users
 
 ## Contributing
