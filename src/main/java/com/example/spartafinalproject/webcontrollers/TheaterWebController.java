@@ -49,16 +49,25 @@ public class TheaterWebController {
             return "theaters-not-found";
     }
 
-    @PostMapping("/theaters/create")
-    public String create(@ModelAttribute("theaterToUpdate")Theaters editedTheater){
-        theatersRepository.save(editedTheater);
-        return "theaters-create-success";
+    @GetMapping("/theaters/create")
+    public String getTheaterToCreate(Model model){
+            model.addAttribute("newTheater", new Theaters());
+            return "theaters-create-form";
+    }
+
+    @PostMapping("/theaters/created")
+    public String create(@ModelAttribute("newTheater")Theaters newTheater){
+        if (theatersRepository.existsById(newTheater.getId()) || theatersRepository.findByTheaterId(newTheater.getTheaterId()).isPresent())
+            return "theater-exists-form";
+        else
+            return "theaters-create-form";
+
     }
 
     @PostMapping("/theaters/update")
-    public String updateTheater(@ModelAttribute("newTheater")Theaters newTheater){
-        if ((theatersRepository.existsById(newTheater.getId()) && theatersRepository.findByTheaterId(newTheater.getTheaterId()).isPresent())){
-            theatersRepository.save(newTheater);
+    public String updateTheater(@ModelAttribute("theaterToUpdate")Theaters theaterToUpdate){
+        if ((theatersRepository.existsById(theaterToUpdate.getId()) && theatersRepository.findByTheaterId(theaterToUpdate.getTheaterId()).isPresent())){
+            theatersRepository.save(theaterToUpdate);
             return "theaters-update-success";
         }
         else
