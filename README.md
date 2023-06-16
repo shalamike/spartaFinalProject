@@ -8,6 +8,16 @@
 4. Contributing
 
 ## About
+
+Developed by Tech 219.
+
+The application searches for request data from a MongoDB database `sample_mflix` and presents it to the user.
+
+Purpose:
+- Using Spring Boot and appropriate testing methods
+- Exploring the concepts of REST
+- Exploring Thymeleaf
+
 ## General Requirements
 ## API Endpoints
 
@@ -15,9 +25,13 @@
 
 The following table shows the endpoints available relating to the `movies` collection:
 | HTTP Verbs  | Endpoints | Action |
-| ------------- | ------------- |  ------------- |
-| POST | /movie | To create a new movie |
-| GET | /movie/{id} | To retrieve a movie by its `id` |
+| ----------- | --------- |  ----- |
+| POST | /api/movie | To create a new movie, submit the entry via the request body, see JSON format for entries below |
+| GET | /api/movie/{id} | To retrieve a movie by its `id` |
+| GET | /api/movie/title/{title} | To retrieve movies by its `title` |
+| PUT | /api/movie/{id} | To update a movie, provide its `id` as a path variable, then specify the field to be updated in the request body (see JSON format below)|
+| DELETE | /api/movie/{id} | To delete a movie by its `id` |
+
 
 
 
