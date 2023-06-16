@@ -29,6 +29,7 @@ public class TheaterControllerTests {
 
 
     Theaters theater = new Theaters(999, null, "aaaaaaaaaaaaaaaaaaaaaaa");
+    Theaters theater2 = new Theaters(888, null, "bbbbbbbbbbbbbbbbbbbbbbb");
 
     @Test
     @DisplayName("check that searching all theaters returns a 200 resposne")
@@ -66,7 +67,24 @@ public class TheaterControllerTests {
                 .expectStatus()
                 .isOk()
                 .expectBody().toString()
-                .contains("[{\"theaterId\":1003,\"location\":{\"geo\":{\"coordinates\":[-76.512016,38.29697],\"type\":\"Point\"},\"address\":{\"zipcode\":\"20619\",\"city\":\"California\",\"street1\":\"45235 Worth Ave.\",\"state\":\"MD\"}},\"_id\":\"59a47286cfa9a3a73e51e72d\"}]");
+                .equals("[{\"theaterId\":1003,\"location\":{\"geo\":{\"coordinates\":[-76.512016,38.29697],\"type\":\"Point\"},\"address\":{\"zipcode\":\"20619\",\"city\":\"California\",\"street1\":\"45235 Worth Ave.\",\"state\":\"MD\"}},\"_id\":\"59a47286cfa9a3a73e51e72d\"}]");
+    }
+
+    @Test
+    @DisplayName("testing getTheaterById response")
+    @Order(3)
+    void testGetTheaterById2(){
+        webTestClient.get()
+                .uri("/api/theaters/id/{id}","59a47286cfa9a3a73e51e72d")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody()
+                .jsonPath("$.theaterId").isEqualTo(1003)
+                .jsonPath("$.location").isNotEmpty()
+                .jsonPath("$.location.address.zipcode").isEqualTo("20619")
+                .jsonPath("$.location.geo.coordinates").toString()
+                .equals(" [-76.512016,38.29697]");
     }
 
     @Test
@@ -83,20 +101,41 @@ public class TheaterControllerTests {
                 .isCreated()
                 .expectHeader()
                 .contentType(MediaType.APPLICATION_JSON)
-                .expectBody().toString().contains("[{\"theaterId\":999,\"location\":null,\"_id\":\"aaaaaaaaaaaaaaaa\"}]");
+                .expectBody().toString().equals("[{\"theaterId\":999,\"location\":null,\"_id\":\"aaaaaaaaaaaaaaaaaaaaaaa\"}]");
 
     }
 
     @Test
-    @DisplayName("testing update Theater Method")
+    @DisplayName("testing createTheater method 2")
+    @Order(4)
+    void testCreateTheater2(){
+
+        webTestClient.post().uri("/api/theaters/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(theater2), Theaters.class)
+                .exchange()
+                .expectStatus()
+                .isCreated()
+                .expectHeader()
+                .contentType(MediaType.APPLICATION_JSON)
+                .expectBody()
+                .jsonPath("$.theaterId").isEqualTo(888)
+                .jsonPath("$._id").isEqualTo("bbbbbbbbbbbbbbbbbbbbbbb");
+
+    }
+
+    @Test
+    @DisplayName("testing update Theater Method by theaeterId")
     @Order(5)
-    void testUpdateTheater(){
+    void testUpdateTheaterByTheaterId(){
         Theaters updatedTheater = theater;
         Location location = new Location();
         Address address = new Address();
         address.setCity("some City");
         address.setZipcode("123ASD");
         address.setState("aState");
+        location.setAddress(address);
         updatedTheater.setLocation(location);
 
         webTestClient.put().uri("/api/theaters/theaterid/{id}", 999)
@@ -106,16 +145,57 @@ public class TheaterControllerTests {
                 .exchange()
                 .expectStatus()
                 .isCreated()
-                .expectBody();
+                .expectBody()
+                .jsonPath("$.location.address.city").isEqualTo("some City")
+                .jsonPath("$.location.address.zipcode").isEqualTo("123ASD")
+                .jsonPath("$.location.address.state").isEqualTo("aState");
+    }
+
+    @Test
+    @DisplayName("testing update Theater Method by id")
+    @Order(5)
+    void testUpdateTheaterById(){
+        Theaters updatedTheater = theater2;
+        Location location = new Location();
+        Address address = new Address();
+        address.setCity("some other City");
+        address.setZipcode("456ZXC");
+        address.setState("NoState");
+        location.setAddress(address);
+        updatedTheater.setLocation(location);
+
+        webTestClient.put().uri("/api/theaters/id/{id}", "bbbbbbbbbbbbbbbbbbbbbbb")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(updatedTheater), Theaters.class)
+                .exchange()
+                .expectStatus()
+                .isCreated()
+                .expectBody()
+                .jsonPath("$.location.address.city").isEqualTo("some other City")
+                .jsonPath("$.location.address.zipcode").isEqualTo("456ZXC")
+                .jsonPath("$.location.address.state").isEqualTo("NoState");
     }
 
 
     @Test
-    @DisplayName("Testing delete theater method")
+    @DisplayName("Testing delete theater Id method")
     @Order(6)
     void testDeleteTheaterById(){
 
         webTestClient.delete().uri("/api/theaters/id/{id}", theater.getId())
+                .exchange()
+                .expectStatus()
+                .isOk();
+
+    }
+
+    @Test
+    @DisplayName("Testing delete theater by theaterId method")
+    @Order(6)
+    void testDeleteTheaterByTheaterId(){
+
+        webTestClient.delete().uri("/api/theaters/theaterid/{id}", theater2.getTheaterId())
                 .exchange()
                 .expectStatus()
                 .isOk();
