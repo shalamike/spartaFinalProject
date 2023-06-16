@@ -123,6 +123,9 @@ The following table shows the endpoints available relating to the `comments` col
 | GET | /api/comments/movie/{id} | To retrieve all comments for a particular movie, by the movie's `id` |
 | PUT | /api/comment/{id} | To update a comment, provide its `id` as a path variable, then specify the field to be updated in the request body (see JSON format below)|
 | DELETE | /api/comment/{id} | To delete a comment by its `id` |
+| GET | /comments | To retrieve all comments |
+| GET | /comment/{id} | To retrieve a comment by its `id` |
+| GET | /comment/movie/{id} | To retrieve all comments for a particular movie, by the movie's `id` |
 
 NOTE: The following JSON shows an example of the format for creating a new comment. An ID must be specified.
 ```
