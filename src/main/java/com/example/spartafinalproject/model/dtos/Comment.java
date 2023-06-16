@@ -1,5 +1,6 @@
 package com.example.spartafinalproject.model.dtos;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ public class Comment{
 	@JsonProperty("name")
 	private String name;
 
+	@Id
 	@JsonProperty("_id")
 	private String id;
 
