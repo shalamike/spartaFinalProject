@@ -2,8 +2,7 @@ package com.example.spartafinalproject.controllers;
 
 import com.example.spartafinalproject.model.dtos.Movie;
 import com.example.spartafinalproject.repositories.MoviesRepositoryTests;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -11,16 +10,18 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MovieControllerTests {
     @Autowired
     WebTestClient webTestClient;
 
     @Test
+    @Order(1)
     @DisplayName("Testing createMovie response")
     void testCreateMovie(){
         Movie movie = MoviesRepositoryTests.getMovie();
 
-        webTestClient.post().uri("/movie")
+        webTestClient.post().uri("/api/movie")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(movie),Movie.class)
@@ -36,10 +37,11 @@ public class MovieControllerTests {
     }
 
     @Test
+    @Order(2)
     @DisplayName("Testing getMovieById response")
     void testGetMovieById(){
         webTestClient.get()
-                .uri("movie/{id}","testId")
+                .uri("/api/movie/{id}","testId")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -49,8 +51,23 @@ public class MovieControllerTests {
                 .jsonPath("$.type").isEqualTo("movie")
                 .jsonPath("$.numMflixComments").isEqualTo(0);
     }
+    @Test
+    @Order(3)
+    @DisplayName("Testing getMovieByTitle response")
+    void testGetMovieByTitle(){
+        Movie movie = MoviesRepositoryTests.getMovie();
+        webTestClient.get()
+                .uri("/api/movie/title/{title}",movie.getTitle())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Movie.class);
+
+    }
+
+
 
     @Test
+    @Order(4)
     @DisplayName("Testing updateMovie response")
     void testUpdateMovie(){
         Movie movieUpdates = MoviesRepositoryTests.getMovie();
@@ -59,7 +76,7 @@ public class MovieControllerTests {
         movieUpdates.setNumMflixComments(72);
 
         webTestClient.put()
-                .uri("/movie/{id}","testId")
+                .uri("/api/movie/{id}","testId")
                 .body(Mono.just(movieUpdates),Movie.class)
                 .exchange()
                 .expectStatus().isOk()
@@ -73,10 +90,11 @@ public class MovieControllerTests {
     }
 
     @Test
+    @Order(5)
     @DisplayName("Testing deleteMovieById response")
     void testDeleteMovieById(){
         webTestClient.delete()
-                .uri("/movie/{id}","testId")
+                .uri("/api/movie/{id}","testId")
                 .exchange()
                 .expectStatus().isOk();
     }
