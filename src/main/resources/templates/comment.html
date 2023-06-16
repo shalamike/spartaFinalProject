@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Comment Details</h1>
+<span th:if="${comment==null}">Comment does not exist!</span>
+  <table th:unless="${comment==null}">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Movie Title</th>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Text</th>
+      <th>Email</th>
+    </tr>
+    </thead>
+    <tr>
+      <td th:text="${comment.id}"></td>
+      <td th:if="${movie==null}">No movie associated with this comment.</td>
+      <td th:unless="${movie==null}" th:text="${movie.title}"></td>
+      <td th:text="${comment.date}"></td>
+      <td th:text="${comment.name}"></td>
+      <td th:text="${comment.text}"></td>
+      <td th:text="${comment.email}"></td>
+    </tr>
+  </table>
+</body>
+</html>
