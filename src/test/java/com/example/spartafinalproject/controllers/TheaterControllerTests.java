@@ -72,7 +72,7 @@ public class TheaterControllerTests {
 
     @Test
     @DisplayName("testing getTheaterById response")
-    @Order(3)
+    @Order(4)
     void testGetTheaterById2(){
         webTestClient.get()
                 .uri("/api/theaters/id/{id}","59a47286cfa9a3a73e51e72d")
@@ -89,7 +89,7 @@ public class TheaterControllerTests {
 
     @Test
     @DisplayName("testing createTheater method")
-    @Order(4)
+    @Order(5)
     void testCreateTheater(){
 
         webTestClient.post().uri("/api/theaters/")
@@ -107,7 +107,7 @@ public class TheaterControllerTests {
 
     @Test
     @DisplayName("testing createTheater method 2")
-    @Order(4)
+    @Order(6)
     void testCreateTheater2(){
 
         webTestClient.post().uri("/api/theaters/")
@@ -127,7 +127,7 @@ public class TheaterControllerTests {
 
     @Test
     @DisplayName("testing update Theater Method by theaeterId")
-    @Order(5)
+    @Order(7)
     void testUpdateTheaterByTheaterId(){
         Theaters updatedTheater = theater;
         Location location = new Location();
@@ -153,7 +153,7 @@ public class TheaterControllerTests {
 
     @Test
     @DisplayName("testing update Theater Method by id")
-    @Order(5)
+    @Order(8)
     void testUpdateTheaterById(){
         Theaters updatedTheater = theater2;
         Location location = new Location();
@@ -180,7 +180,7 @@ public class TheaterControllerTests {
 
     @Test
     @DisplayName("Testing delete theater Id method")
-    @Order(6)
+    @Order(9)
     void testDeleteTheaterById(){
 
         webTestClient.delete().uri("/api/theaters/id/{id}", theater.getId())
@@ -192,7 +192,7 @@ public class TheaterControllerTests {
 
     @Test
     @DisplayName("Testing delete theater by theaterId method")
-    @Order(6)
+    @Order(10)
     void testDeleteTheaterByTheaterId(){
 
         webTestClient.delete().uri("/api/theaters/theaterid/{id}", theater2.getTheaterId())
