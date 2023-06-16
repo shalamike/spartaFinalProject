@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Theater Search</title>
+</head>
+<body>
+<h1>Table of theaters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Theater ID</th>
+      <th>City</th>
+      <th>ZipCode</th>
+      <th>ID</th>
+    </tr>
+  </thead>
+  <tr th:each="theater : ${theaters}">
+    <td th:text="${theater.id}"></td>
+    <td th:text="${theater.theaterId}"></td>
+    <td th:text="${theater.location.address.city}"></td>
+    <td th:text="${theater.location.address.zipcode}"></td>
+    <td th:text="${theater.location.address.state}"></td>
+  </tr>
+</table>
+
+</body>
+</html>
