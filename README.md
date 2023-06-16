@@ -77,6 +77,42 @@ NOTE: The following is the JSON document below demonstrates required format for 
 }
 ```
 ### Theaters
+The following table shows the endpoints available relating to the `theaters` collection:
+| HTTP Verbs  | Endpoints | Action |
+| ----------- | --------- |  ----- |
+| POST | /api/theaters/ | To create a new theater, submit the entry via the request body, see JSON format for entries below |
+| GET | /api/theaters/ | To retrieve all theaters |
+| GET | /api/theaters/id/{id} | To retrieve a theater by its object `id` |
+| GET | /api/theaters/theaterid/{theaterid} | To retrieve theaters by its  `theaterId` |
+| PUT | /api/theaters/theaterid/{theaterid} | To update a theater by its  `theaterId` as a path variable, then specify the field to be updated in the request body (see JSON format below)|
+| PUT | /api/theaters/id/{id} | To update a theater by its object `id` as a path variable, then specify the field to be updated in the request body (see JSON format below)|
+| DELETE | /api/theaters/id/{id}| To delete a theater by its object `id` |
+| DELETE | /api/theaters/theaterid/{theaterid} | To delete a theater by its `theaterId` |
+
+json format for theater
+```
+{
+    "theaterId": 1003,
+    "location": {
+        "geo": {
+            "coordinates": [
+                -76.512016,
+                38.29697
+            ],
+            "type": "Point"
+        },
+        "address": {
+            "zipcode": "20619",
+            "city": "California",
+            "street1": "45235 Worth Ave.",
+            "state": "MD"
+        }
+    },
+    "_id": "59a47286cfa9a3a73e51e72d"
+}
+```
+
+
 ### Comments
 ### Sessions
 ### Users
