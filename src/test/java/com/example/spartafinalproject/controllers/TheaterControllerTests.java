@@ -49,7 +49,7 @@ public class TheaterControllerTests {
     @Order(2)
     void testGetTheaterByTeaterId(){
         webTestClient.get()
-                .uri("/api/theaters/theaterId/{theaterid}",1003)
+                .uri("/api/theaters/theaterid/{theaterid}",1003)
                 .exchange()
                 .expectStatus()
                 .isOk()
