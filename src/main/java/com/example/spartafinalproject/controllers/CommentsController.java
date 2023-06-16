@@ -34,8 +34,8 @@ public class CommentsController {
         }
     }
 
-    @GetMapping("/comments/movie")
-    public ResponseEntity<?> getCommentsByMovie(@RequestParam String id) {
+    @GetMapping("/comments/movie/{id}")
+    public ResponseEntity<?> getCommentsByMovie(@PathVariable String id) {
         Optional<Movie> movie = moviesRepository.findById(id);
         if(movie.isEmpty()) {
             return new ResponseEntity<>("Movie does not exist!", HttpStatus.BAD_REQUEST);
@@ -49,8 +49,8 @@ public class CommentsController {
         }
     }
 
-    @GetMapping("/comment")
-    public ResponseEntity<?> getCommentById(@RequestParam String id) {
+    @GetMapping("/comment/{id}")
+    public ResponseEntity<?> getCommentById(@PathVariable String id) {
         Optional<Comment> comment = commentsRepository.findById(id);
 
         if(comment.isPresent()) {
@@ -71,8 +71,8 @@ public class CommentsController {
         }
     }
 
-    @DeleteMapping("/comment")
-    public ResponseEntity<String> deleteComment(@RequestParam String id) {
+    @DeleteMapping("/comment/{id}")
+    public ResponseEntity<String> deleteComment(@PathVariable String id) {
         Optional<Comment> comment = commentsRepository.findById(id);
 
         if(comment.isPresent()) {
@@ -83,8 +83,8 @@ public class CommentsController {
         }
     }
 
-    @PutMapping("/comment")
-    public ResponseEntity<?> updateComment(@RequestParam String id, @RequestBody Comment comment) {
+    @PutMapping("/comment/{id}")
+    public ResponseEntity<?> updateComment(@PathVariable String id, @RequestBody Comment comment) {
         Optional<Comment> commentData = commentsRepository.findById(id);
 
         if (commentData.isPresent()) {
