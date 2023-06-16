@@ -44,6 +44,9 @@ public class Movie {
     private String poster;
     private Date released;
 
+    public Movie() {
+    }
+
     public Movie(@NotNull String title, @NotNull Integer year, @NotNull String type) {
         this.title = title;
         this.year = year;
