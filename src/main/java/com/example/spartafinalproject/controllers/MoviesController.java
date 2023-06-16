@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @RestController
+@RequestMapping("/api")
 public class MoviesController {
     static Logger logger = Logger.getLogger(MoviesController.class.getName());
     private MoviesRepository repository;

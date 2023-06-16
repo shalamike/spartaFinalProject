@@ -21,7 +21,7 @@ public class MovieControllerTests {
     void testCreateMovie(){
         Movie movie = MoviesRepositoryTests.getMovie();
 
-        webTestClient.post().uri("/movie")
+        webTestClient.post().uri("/api/movie")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(movie),Movie.class)
@@ -41,7 +41,7 @@ public class MovieControllerTests {
     @DisplayName("Testing getMovieById response")
     void testGetMovieById(){
         webTestClient.get()
-                .uri("movie/{id}","testId")
+                .uri("/api/movie/{id}","testId")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -57,7 +57,7 @@ public class MovieControllerTests {
     void testGetMovieByTitle(){
         Movie movie = MoviesRepositoryTests.getMovie();
         webTestClient.get()
-                .uri("movie/title/{title}",movie.getTitle())
+                .uri("/api/movie/title/{title}",movie.getTitle())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Movie.class);
@@ -76,7 +76,7 @@ public class MovieControllerTests {
         movieUpdates.setNumMflixComments(72);
 
         webTestClient.put()
-                .uri("/movie/{id}","testId")
+                .uri("/api/movie/{id}","testId")
                 .body(Mono.just(movieUpdates),Movie.class)
                 .exchange()
                 .expectStatus().isOk()
@@ -94,7 +94,7 @@ public class MovieControllerTests {
     @DisplayName("Testing deleteMovieById response")
     void testDeleteMovieById(){
         webTestClient.delete()
-                .uri("/movie/{id}","testId")
+                .uri("/api/movie/{id}","testId")
                 .exchange()
                 .expectStatus().isOk();
     }
