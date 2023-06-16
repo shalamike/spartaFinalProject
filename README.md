@@ -19,6 +19,23 @@ Purpose:
 - Exploring Thymeleaf
 
 ## General Requirements
+This is a proof of concept project.
+
+The product owner wants to explore the possibility of having a MongoDB and cloud-based solution for accessing information about movies, allowing users to post or read comments on movies and managing a film schedule for cinemas.
+
+A sample database (sample_mflix) is provided which includes details of movies, comments, "theaters" and users.
+
+Two products are required: - A RESTful API which allows full CRUD access to the existing data for these 4 collections - A Web application providing a browser-based interface to the same set of existing collections
+
+Additionally, a new feature is required to allow an administrator to create a schedule for a theatre, adding films to the roster and specifying showing times. No ticketing system is required at this point in the project. The cinema film scheduling feature should also be provided through both interfaces (REST & Web).
+
+### Required Technologies
+The persistence mechanism must be MongoDB
+The database must be hosted on MongoDB Atlas using the "Shared" (free) tier hosted on AWS
+The database must be based on the sample_mflix database, which is provided for use within MongoDB - this tutorial explains how to install the sample
+Spring Boot must be used for the API and Web front ends
+Spring Data MongoDB must be used for accessing the database from both the API and the Web application
+The code repository for the project must be hosted on GitHub
 ## API Endpoints
 
 ### Movies
@@ -31,8 +48,12 @@ The following table shows the endpoints available relating to the `movies` colle
 | GET | /api/movie/title/{title} | To retrieve movies by its `title` |
 | PUT | /api/movie/{id} | To update a movie, provide its `id` as a path variable, then specify the field to be updated in the request body (see JSON format below)|
 | DELETE | /api/movie/{id} | To delete a movie by its `id` |
+| GET | /web/movies/titles/{title} | To retrieve movies by its `title` |
+| GET | /web/movie/create | To create a movie via a form |
 
 
+
+NOTE: When entering dates for `released` and `tomatoes.lastUpdated` the following format must be used `yyyy-MM-dd'T'HH:mm`
 
 
 NOTE: The following is the JSON document below demonstrates required format for entering the attributes of a movie. The only required fields to create a movie are `title`, `year` and `type`, all other attributes are optional.
