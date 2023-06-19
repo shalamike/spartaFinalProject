@@ -27,7 +27,7 @@ public class CommentsControllerTests {
         Comment comment = new Comment(new Date(2016,10,23), "Tim Duncan", "successfulID12345",
                 "Decent. 6/10", "573a1390f29313caabcd4135", "timduncs@yahoo.co.uk");
 
-        webTestClient.post().uri("/comment")
+        webTestClient.post().uri("/api/comment")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(comment), Comment.class)
@@ -44,7 +44,7 @@ public class CommentsControllerTests {
         Map<String, String> bodyValues = new HashMap<>();
         bodyValues.put("text", "On second thoughts, I disliked it. 2/10");
 
-        webTestClient.put().uri("/comment/{id}", "testID123")
+        webTestClient.put().uri("/api/comment/{id}", "testID123")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(bodyValues))
@@ -58,7 +58,7 @@ public class CommentsControllerTests {
     @Order(3)
     @DisplayName("Check that a comment can be successfully deleted")
     public void deleteComment() {
-        webTestClient.delete().uri("/comment/{id}", "successfulID12345")
+        webTestClient.delete().uri("/api/comment/{id}", "successfulID12345")
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -66,7 +66,7 @@ public class CommentsControllerTests {
     @Test
     @DisplayName("Check that all comments can be returned with get method")
     public void getAllComments() {
-        webTestClient.get().uri("/comments")
+        webTestClient.get().uri("/api/comments")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Comment.class);
@@ -75,7 +75,7 @@ public class CommentsControllerTests {
     @Test
     @DisplayName("Check that comments for an existing movie can be returned")
     public void getCommentsForMovie() {
-        webTestClient.get().uri("/comments/movie/{id}", "573a1390f29313caabcd4135")
+        webTestClient.get().uri("/api/comments/movie/{id}", "573a1390f29313caabcd4135")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Comment.class);
@@ -84,7 +84,7 @@ public class CommentsControllerTests {
     @Test
     @DisplayName("Check that no comments are returned for a movie with an invalid ID")
     public void getCommentsForInvalidMovie() {
-        webTestClient.get().uri("/comments/movie/{id}", "573a1390f29313caabcd56df")
+        webTestClient.get().uri("/api/comments/movie/{id}", "573a1390f29313caabcd56df")
                 .exchange()
                 .expectStatus().isNoContent();
     }
@@ -92,7 +92,7 @@ public class CommentsControllerTests {
     @Test
     @DisplayName("Check that a comment isn't returned when requesting with an invalid ID")
     public void getCommentWithInvalidId() {
-        webTestClient.get().uri("/comments/movie/{id}", "randomID12345")
+        webTestClient.get().uri("/api/comments/movie/{id}", "randomID12345")
                 .exchange()
                 .expectStatus().isBadRequest();
     }
@@ -100,7 +100,7 @@ public class CommentsControllerTests {
     @Test
     @DisplayName("Check that a comment is returned when requesting with a valid ID")
     public void getCommentWithValidId() {
-        webTestClient.get().uri("/comment/{id}","5a9427648b0beebeb69579e7")
+        webTestClient.get().uri("/api/comment/{id}","5a9427648b0beebeb69579e7")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -115,7 +115,7 @@ public class CommentsControllerTests {
         bodyValues.put("name", "Jessica Andrews");
         bodyValues.put("text", "Loved it. 10/10!");
 
-        webTestClient.post().uri("/comment")
+        webTestClient.post().uri("/api/comment")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(bodyValues))
@@ -126,7 +126,7 @@ public class CommentsControllerTests {
     @Test
     @DisplayName("Check that deleting a comment fails when using an invalid ID")
     public void deleteCommentWithInvalidID() {
-        webTestClient.delete().uri("/comment/{id}", "nonExistentID123")
+        webTestClient.delete().uri("/api/comment/{id}", "nonExistentID123")
                 .exchange()
                 .expectStatus().isBadRequest();
     }

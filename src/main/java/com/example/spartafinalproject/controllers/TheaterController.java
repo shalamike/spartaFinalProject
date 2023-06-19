@@ -40,13 +40,13 @@ public class TheaterController {
         }
     }
 
-    @GetMapping("theaterId/{theaterId}")
-    public ResponseEntity<?>getTheaterByTheaterId(@PathVariable int theaterId){
-        Optional<Theaters> theater = theatersRepository.findByTheaterId(theaterId);
+    @GetMapping("theaterid/{theaterid}")
+    public ResponseEntity<?>getTheaterByTheaterId(@PathVariable int theaterid){
+        Optional<Theaters> theater = theatersRepository.findByTheaterId(theaterid);
         if (theater.isPresent())
             return new ResponseEntity<>(theater.get(), HttpStatus.OK);
         else
-            return new ResponseEntity<>("No theater with theaterId " + theaterId + " found", HttpStatus.OK);
+            return new ResponseEntity<>("No theater with theaterId " + theaterid + " found", HttpStatus.OK);
     }
 
     @GetMapping(value = "id/{id}")
@@ -70,16 +70,23 @@ public class TheaterController {
     @PutMapping(value = "theaterid/{id}")
     public ResponseEntity<?> updateTheaterByTheaterId(@PathVariable Integer id, @RequestBody Theaters theater){
         Optional<Theaters> theaterToUpdate = theatersRepository.findByTheaterId(id);
-        if(theaterToUpdate.isPresent())
-            return new ResponseEntity<>(theatersRepository.save(theater), HttpStatus.CREATED);
-        else
-            return new ResponseEntity<>("A Theater with this ID doesnt exist, Use Post to create one", HttpStatus.BAD_REQUEST);
+        return getResponseEntity(theater, theaterToUpdate);
     }
 
     @PutMapping(value = "id/{id}")
     public ResponseEntity<?> updateTheaterById(@PathVariable String id, @RequestBody Theaters theater){
-        if(theatersRepository.existsById(id))
-            return new ResponseEntity<>(theatersRepository.save(theater), HttpStatus.CREATED);
+        Optional<Theaters> theaterToUpdate = theatersRepository.findById(id);
+        return getResponseEntity(theater, theaterToUpdate);
+    }
+
+    private ResponseEntity<?> getResponseEntity(@RequestBody Theaters theater, Optional<Theaters> theaterToUpdate) {
+        int originalTheaterId = theaterToUpdate.get().getTheaterId();
+        String originalId = theaterToUpdate.get().getId();
+        if(theaterToUpdate.isPresent())
+            if (originalId.equals(theater.getId()) && originalTheaterId == theater.getTheaterId())
+                return new ResponseEntity<>(theatersRepository.save(theater), HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>("Keys do not match with the original entry, please ensure they stay the same when updating", HttpStatus.BAD_REQUEST);
         else
             return new ResponseEntity<>("A Theater with this ID doesnt exist, Use Post to create one", HttpStatus.BAD_REQUEST);
     }
@@ -97,11 +104,11 @@ public class TheaterController {
         }
     }
 
-    @DeleteMapping(value = "theaterid/{id}")
-    public ResponseEntity<String>deleteBytheaterId(@PathVariable Integer id){
-        Optional<Theaters> theaterToDelete = theatersRepository.findByTheaterId(id);
+    @DeleteMapping(value = "theaterid/{theaterid}")
+    public ResponseEntity<String>deleteBytheaterId(@PathVariable Integer theaterid){
+        Optional<Theaters> theaterToDelete = theatersRepository.findByTheaterId(theaterid);
         if (theaterToDelete.isPresent()){
-            theatersRepository.deleteByTheaterId(id);
+            theatersRepository.deleteByTheaterId(theaterid);
             return new ResponseEntity<>("Theater deleted",  HttpStatus.OK);
         }
         else {

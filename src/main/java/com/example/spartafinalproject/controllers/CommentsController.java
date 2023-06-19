@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api")
 public class CommentsController {
     private CommentsRepository commentsRepository;
     private MoviesRepository moviesRepository;
