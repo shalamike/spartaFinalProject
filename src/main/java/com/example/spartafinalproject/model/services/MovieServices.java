@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
@@ -27,12 +28,15 @@ public class MovieServices {
 
     public boolean doesMovieExist(Movie movie) {
         if (movie.getId() == null) {
+
             return false;
         }
         Optional<Movie> existingMovie = repository.findMovieById(movie.getId());
         if (existingMovie.isEmpty()) {
+            logger.log(Level.INFO,"Movie ID: "+ movie.getId()+", Title: "+movie.getTitle()+" does not exist");
             return false;
         }
+        logger.log(Level.INFO,"Movie ID: "+ movie.getId()+", Title: "+movie.getTitle()+" found");
         return existingMovie.get().getId().equals(movie.getId());
     }
 
@@ -58,7 +62,7 @@ public class MovieServices {
         updateByLastupdated(movieUpdates, foundMovie);
         updateByPoster(movieUpdates, foundMovie);
         updateByReleased(movieUpdates, foundMovie);
-
+        logger.log(Level.INFO,"Movie ID: "+ foundMovie.getId()+", Title: "+foundMovie.getTitle()+" updated");
         return repository.save(foundMovie);
     }
 
@@ -206,6 +210,7 @@ public class MovieServices {
         movie.setAwards((Awards) setObjectToNullIfEmpty(movie.getAwards()));
         movie.setLastupdated(setStrToNullIfEmpty(movie.getLastupdated()));
         movie.setPoster(setStrToNullIfEmpty(movie.getPoster()));
+        logger.log(Level.INFO,"All empty movie fields set to null");
     }
 
     private Object setObjectToNullIfEmpty(Object object) throws IllegalAccessException {

@@ -38,7 +38,7 @@ public class MoviesRepositoryTests {
     void testFindMovieByTitleContaining(){
         Movie movie = getMovie();
         moviesRepository.save(movie);
-        Optional<List<Movie>> results = moviesRepository.findMovieByTitleContaining(movie.getTitle());
+        List<Movie> results = moviesRepository.findMovieByTitleContaining(movie.getTitle());
         Assertions.assertNotNull(results);
     }
 

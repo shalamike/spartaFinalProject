@@ -52,12 +52,12 @@ public class MoviesWebController {
     //read
     @GetMapping("/movies/titles/{title}")
     public String getMoviesByTitle(Model model,@PathVariable String title) {
-        Optional<List<Movie>> movies = moviesRepository.findMovieByTitleContaining(title);
-        if (movies.isPresent()) {
-            model.addAttribute("movies",movies.get());
-            return "movies";
-        } else {
+        List<Movie> movies = moviesRepository.findMovieByTitleContaining(title);
+        if (movies.isEmpty()) {
             return "no-movies-found";
+        } else {
+            model.addAttribute("movies",movies);
+            return "movies";
         }
     }
     //update
