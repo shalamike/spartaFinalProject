@@ -22,6 +22,10 @@ public class Theaters{
 	@JsonProperty("_id")
 	private String id;
 
+	public Theaters() {
+
+	}
+
 	public void setTheaterId(int theaterId){
 		this.theaterId = theaterId;
 	}

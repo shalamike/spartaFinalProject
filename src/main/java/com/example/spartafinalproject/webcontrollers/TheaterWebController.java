@@ -34,8 +34,8 @@ public class TheaterWebController {
     }
 
     @GetMapping("/theaters/theaterid")
-    public String getTheaterByTheaterId(@RequestParam String id, Model model){
-        model.addAttribute("theaters", theatersRepository.findById(id));
+    public String getTheaterByTheaterId(@RequestParam int id, Model model){
+        model.addAttribute("theaters", theatersRepository.findByTheaterId(id));
         return "theaters-find-by-id";
     }
 
