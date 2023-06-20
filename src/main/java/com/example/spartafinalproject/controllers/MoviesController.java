@@ -59,7 +59,7 @@ public class MoviesController {
 
     @GetMapping("/movie/title/{title}")
     public ResponseEntity<?> getMovieByTitle(@PathVariable("title") String title) {
-        List<Movie> movies = repository.findMovieByTitleContaining(title);
+        List<Movie> movies = repository.findMovieByTitleContainingIgnoreCase(title);
         if (movies.isEmpty()) {
             logger.log(Level.INFO,"No movies with titles containing \""+title+"\" returned to user");
             return new ResponseEntity<>("No movies with title " + title + " found", HttpStatus.OK);

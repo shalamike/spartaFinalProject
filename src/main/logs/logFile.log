@@ -1,2 +1,24 @@
-Jun 19, 2023 12:15:12 PM org.apache.catalina.core.ApplicationContext log
+Jun 20, 2023 2:40:17 PM org.apache.catalina.core.ApplicationContext log
 INFO: Initializing Spring DispatcherServlet 'dispatcherServlet'
+Jun 20, 2023 2:40:31 PM com.example.spartafinalproject.model.services.MovieServices setEmptyAttributesToNull
+INFO: All empty movie fields set to null
+Jun 20, 2023 2:40:31 PM com.example.spartafinalproject.model.services.MovieServices updateMovie
+INFO: Movie ID: testId, Title: Test Title Update updated
+Jun 20, 2023 2:40:31 PM com.example.spartafinalproject.webcontrollers.MoviesWebController postMovieToUpdate
+INFO: Movie with the ID "testId" returned to user
+Jun 20, 2023 2:40:39 PM com.example.spartafinalproject.controllers.MoviesController getMovieById
+INFO: Movie ID: testId, Title: Test Title Update returned to user
+Jun 20, 2023 2:42:21 PM com.example.spartafinalproject.model.services.MovieServices setEmptyAttributesToNull
+INFO: All empty movie fields set to null
+Jun 20, 2023 2:42:21 PM com.example.spartafinalproject.model.services.MovieServices updateMovie
+INFO: Movie ID: testId, Title: Test Title Update updated
+Jun 20, 2023 2:42:21 PM com.example.spartafinalproject.webcontrollers.MoviesWebController postMovieToUpdate
+INFO: Movie with the ID "testId" returned to user
+Jun 20, 2023 2:43:31 PM com.example.spartafinalproject.model.services.MovieServices setEmptyAttributesToNull
+INFO: All empty movie fields set to null
+Jun 20, 2023 2:43:31 PM com.example.spartafinalproject.model.services.MovieServices updateMovie
+INFO: Movie ID: testId, Title: Test If Date is Still there updated
+Jun 20, 2023 2:43:31 PM com.example.spartafinalproject.webcontrollers.MoviesWebController postMovieToUpdate
+INFO: Movie with the ID "testId" returned to user
+Jun 20, 2023 2:43:35 PM com.example.spartafinalproject.controllers.MoviesController getMovieById
+INFO: Movie ID: testId, Title: Test If Date is Still there returned to user

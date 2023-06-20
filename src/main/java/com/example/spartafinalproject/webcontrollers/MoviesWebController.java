@@ -38,7 +38,7 @@ public class MoviesWebController {
     public String getMovieToCreate(Model model) {
         Movie movie = new Movie();
         model.addAttribute("movieToCreate", movie);
-        logger.log(Level.INFO,"User sent to enter movie details via movie-create-form");
+        logger.log(Level.INFO, "User sent to enter movie details via movie-create-form");
         return "movie-create-form";
     }
 
@@ -46,15 +46,15 @@ public class MoviesWebController {
     public String postMovieToCreate(@ModelAttribute("movieToCreate") Movie movie) throws IllegalAccessException {
         movieServices.setEmptyAttributesToNull(movie);
         if (movieServices.doesMovieExist(movie)) {
-            logger.log(Level.INFO,"Movie with the ID \""+movie.getId()+"\" already exists");
+            logger.log(Level.INFO, "Movie with the ID \"" + movie.getId() + "\" already exists");
             return "movie-already-exists";
         }
         try {
             Movie addedMovie = moviesRepository.save(movie);
-            logger.log(Level.INFO,"Movie with the ID \""+movie.getId()+"\" returned to user");
+            logger.log(Level.INFO, "Movie with the ID \"" + movie.getId() + "\" returned to user");
             return "movie-create-success";
         } catch (Exception e) {
-            logger.log(Level.WARNING,"Internal Server Error");
+            logger.log(Level.WARNING, "Internal Server Error");
             return "movie-create-error";
         }
     }
@@ -65,18 +65,52 @@ public class MoviesWebController {
 
     @GetMapping("/movies/titles/{title}")
     public String getMoviesByTitle(Model model, @PathVariable String title) {
-        List<Movie> movies = moviesRepository.findMovieByTitleContaining(title);
+        List<Movie> movies = moviesRepository.findMovieByTitleContainingIgnoreCase(title);
         if (movies.isEmpty()) {
-            logger.log(Level.INFO,"No movies with titles containing \""+title+"\" returned to user");
+            logger.log(Level.INFO, "No movies with titles containing \"" + title + "\" returned to user");
             return "no-movies-found";
         } else {
-            logger.log(Level.INFO,"List of movies with titles containing \""+title+"\" returned to user");
+            logger.log(Level.INFO, "List of movies with titles containing \"" + title + "\" returned to user");
             model.addAttribute("movies", movies);
             return "movies";
         }
     }
 
     //update
+    //get mapping with form
+    @GetMapping("/movie/update/{id}")
+    public String getMovieToUpdate(@PathVariable String id, Model model) {
+        Optional<Movie> movie = moviesRepository.findMovieById(id);
+        if (movie.isPresent()) {
+            model.addAttribute("foundMovie",movie.get());
+
+            Movie movieUpdates = new Movie();
+            movieUpdates.setId(id);
+            model.addAttribute("movieUpdates", movieUpdates);
+            return "movie-update-form";
+        } else {
+            logger.log(Level.WARNING, "No movies with the ID \"" + id + "\" returned to user");
+            return "no-movies-found";
+        }
+    }
+
+    //post mapping with data entry
+    @PostMapping("/movie/update/{id}")
+    public String postMovieToUpdate(@PathVariable("id")String id, @ModelAttribute("movieUpdates")Movie movieUpdates) throws IllegalAccessException {
+        movieServices.setEmptyAttributesToNull(movieUpdates);
+
+        Optional<Movie>  movie = moviesRepository.findMovieById(id);
+        if(movie.isPresent() && id.equals(movieUpdates.getId())){
+            Movie movieStored = movieServices.updateMovie(movieUpdates, movie.get());
+            logger.log(Level.INFO,"Movie with the ID \""+id+"\" returned to user");
+            return "movie-update-success";
+        }else {
+            logger.log(Level.WARNING, "No movies with the ID \"" + id + "\" returned to user");
+            return "no-movies-found";
+        }
+    }
+
+
     //delete
     @GetMapping("/movie/delete/{id}")
     String deleteMovie(@PathVariable String id) {
@@ -85,8 +119,8 @@ public class MoviesWebController {
             moviesRepository.deleteById(id);
             logger.log(Level.INFO, "Movie with the ID \"" + id + "\" deleted by user");
             return "movie-confirm-delete";
-        }else {
-            logger.log(Level.INFO,"No movies with the ID \""+id+"\" found, no deletion completed");
+        } else {
+            logger.log(Level.INFO, "No movies with the ID \"" + id + "\" found, no deletion completed");
             return "no-movies-found";
         }
     }

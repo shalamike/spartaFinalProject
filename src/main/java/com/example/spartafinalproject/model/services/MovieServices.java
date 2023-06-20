@@ -194,6 +194,8 @@ public class MovieServices {
 
     public void setEmptyAttributesToNull(Movie movie) throws IllegalAccessException {
         movie.setId(setStrToNullIfEmpty(movie.getId()));
+        movie.setTitle(setStrToNullIfEmpty(movie.getTitle()));
+        movie.setType(setStrToNullIfEmpty(movie.getType()));
         movie.setDirectors((List<String>) setListToNullIfEmpty(movie.getDirectors()));
         movie.setCast((List<String>) setListToNullIfEmpty(movie.getCast()));
         movie.setLanguages((List<String>) setListToNullIfEmpty(movie.getLanguages()));
