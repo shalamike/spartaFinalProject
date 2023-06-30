@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
@@ -27,12 +28,15 @@ public class MovieServices {
 
     public boolean doesMovieExist(Movie movie) {
         if (movie.getId() == null) {
+
             return false;
         }
         Optional<Movie> existingMovie = repository.findMovieById(movie.getId());
         if (existingMovie.isEmpty()) {
+            logger.log(Level.INFO,"Movie ID: "+ movie.getId()+", Title: "+movie.getTitle()+" does not exist");
             return false;
         }
+        logger.log(Level.INFO,"Movie ID: "+ movie.getId()+", Title: "+movie.getTitle()+" found");
         return existingMovie.get().getId().equals(movie.getId());
     }
 
@@ -58,7 +62,7 @@ public class MovieServices {
         updateByLastupdated(movieUpdates, foundMovie);
         updateByPoster(movieUpdates, foundMovie);
         updateByReleased(movieUpdates, foundMovie);
-
+        logger.log(Level.INFO,"Movie ID: "+ foundMovie.getId()+", Title: "+foundMovie.getTitle()+" updated");
         return repository.save(foundMovie);
     }
 
@@ -190,25 +194,28 @@ public class MovieServices {
 
     public void setEmptyAttributesToNull(Movie movie) throws IllegalAccessException {
         movie.setId(setStrToNullIfEmpty(movie.getId()));
+        movie.setTitle(setStrToNullIfEmpty(movie.getTitle()));
+        movie.setType(setStrToNullIfEmpty(movie.getType()));
         movie.setDirectors((List<String>) setListToNullIfEmpty(movie.getDirectors()));
         movie.setCast((List<String>) setListToNullIfEmpty(movie.getCast()));
         movie.setLanguages((List<String>) setListToNullIfEmpty(movie.getLanguages()));
         movie.setWriters((List<String>) setListToNullIfEmpty(movie.getWriters()));
         movie.setCountries((List<String>) setListToNullIfEmpty(movie.getCountries()));
         movie.setRated(setStrToNullIfEmpty(movie.getRated()));
-        movie.getTomatoes().setViewer((Viewer) setObjectToNullIfEmpty(movie.getTomatoes().getViewer()));
-        movie.setTomatoes((Tomatoes) setObjectToNullIfEmpty(movie.getTomatoes()));
+        movie.getTomatoes().setViewer(setObjectToNullIfEmpty(movie.getTomatoes().getViewer()));
+        movie.setTomatoes(setObjectToNullIfEmpty(movie.getTomatoes()));
         movie.setFullplot(setStrToNullIfEmpty(movie.getFullplot()));
-        movie.setImdb((Imdb) setObjectToNullIfEmpty(movie.getImdb()));
+        movie.setImdb(setObjectToNullIfEmpty(movie.getImdb()));
         movie.setPlot(setStrToNullIfEmpty(movie.getPlot()));
         movie.setGenres((List<String>) setListToNullIfEmpty(movie.getGenres()));
         movie.getAwards().setText(setStrToNullIfEmpty(movie.getAwards().getText()));
-        movie.setAwards((Awards) setObjectToNullIfEmpty(movie.getAwards()));
+        movie.setAwards(setObjectToNullIfEmpty(movie.getAwards()));
         movie.setLastupdated(setStrToNullIfEmpty(movie.getLastupdated()));
         movie.setPoster(setStrToNullIfEmpty(movie.getPoster()));
+        logger.log(Level.INFO,"All empty movie fields set to null");
     }
 
-    private Object setObjectToNullIfEmpty(Object object) throws IllegalAccessException {
+    private <T> T setObjectToNullIfEmpty(T object) throws IllegalAccessException {
         Field[] fields = object.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);

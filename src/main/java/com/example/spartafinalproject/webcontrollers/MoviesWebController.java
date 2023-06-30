@@ -1,5 +1,6 @@
 package com.example.spartafinalproject.webcontrollers;
 
+import com.example.spartafinalproject.controllers.MoviesController;
 import com.example.spartafinalproject.model.dtos.Movie;
 import com.example.spartafinalproject.model.dtos.moviessupport.Tomatoes;
 import com.example.spartafinalproject.model.dtos.moviessupport.Viewer;
@@ -15,10 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/web")
 public class MoviesWebController {
+    static Logger logger = Logger.getLogger(MoviesWebController.class.getName());
+
     private MoviesRepository moviesRepository;
     private MovieServices movieServices;
 
@@ -30,41 +35,104 @@ public class MoviesWebController {
 
     //create
     @GetMapping("/movie/create")
-    public String getMovieToCreate(Model model){
-        Movie movie=new Movie();
-        model.addAttribute("movieToCreate",movie);
+    public String getMovieToCreate(Model model) {
+        Movie movie = new Movie();
+        model.addAttribute("movieToCreate", movie);
+        logger.log(Level.INFO, "User sent to enter movie details via movie-create-form");
         return "movie-create-form";
     }
 
     @PostMapping("/movie/create")
-    public String postMovieToCreate(@ModelAttribute("movieToCreate")Movie movie) throws IllegalAccessException {
+    public String postMovieToCreate(@ModelAttribute("movieToCreate") Movie movie) throws IllegalAccessException {
         movieServices.setEmptyAttributesToNull(movie);
-        if(movieServices.doesMovieExist(movie)){
+        if (movieServices.doesMovieExist(movie)) {
+            logger.log(Level.INFO, "Movie with the ID \"" + movie.getId() + "\" already exists");
             return "movie-already-exists";
         }
         try {
             Movie addedMovie = moviesRepository.save(movie);
+            logger.log(Level.INFO, "Movie with the ID \"" + movie.getId() + "\" returned to user");
             return "movie-create-success";
         } catch (Exception e) {
+            logger.log(Level.WARNING, "Internal Server Error");
             return "movie-create-error";
         }
     }
+
     //read
-    @GetMapping("/movies/titles/{title}")
-    public String getMoviesByTitle(Model model,@PathVariable String title) {
-        Optional<List<Movie>> movies = moviesRepository.findMovieByTitleContaining(title);
-        if (movies.isPresent()) {
-            model.addAttribute("movies",movies.get());
-            return "movies";
+
+    @GetMapping("/movie/{id}")
+    public String getMovieById(Model model, @PathVariable("id") String id) {
+        Optional<Movie> movie = moviesRepository.findMovieById(id);
+        if (movie.isPresent()) {
+            logger.log(Level.INFO, "Movie ID: " + movie.get().getId() + ", Title: " + movie.get().getTitle() + " returned to user");
+            model.addAttribute("movie", movie.get());
+            return "movie-profile";
         } else {
+            logger.log(Level.INFO, "No movies with the ID \"" + id + "\" found");
             return "no-movies-found";
         }
     }
+
+    @GetMapping("/movies/titles/{title}")
+    public String getMoviesByTitle(Model model, @PathVariable String title) {
+        List<Movie> movies = moviesRepository.findMovieByTitleContainingIgnoreCase(title);
+        if (movies.isEmpty()) {
+            logger.log(Level.INFO, "No movies with titles containing \"" + title + "\" returned to user");
+            return "no-movies-found";
+        } else {
+            logger.log(Level.INFO, "List of movies with titles containing \"" + title + "\" returned to user");
+            model.addAttribute("movies", movies);
+            return "movies";
+        }
+    }
+
     //update
+
+    @GetMapping("/movie/update/{id}")
+    public String getMovieToUpdate(@PathVariable String id, Model model) {
+        Optional<Movie> movie = moviesRepository.findMovieById(id);
+        if (movie.isPresent()) {
+            model.addAttribute("foundMovie", movie.get());
+
+            Movie movieUpdates = new Movie();
+            movieUpdates.setId(id);
+            model.addAttribute("movieUpdates", movieUpdates);
+            return "movie-update-form";
+        } else {
+            logger.log(Level.WARNING, "No movies with the ID \"" + id + "\" returned to user");
+            return "no-movies-found";
+        }
+    }
+
+
+    @PostMapping("/movie/update/{id}")
+    public String postMovieToUpdate(@PathVariable("id") String id, @ModelAttribute("movieUpdates") Movie movieUpdates) throws IllegalAccessException {
+        movieServices.setEmptyAttributesToNull(movieUpdates);
+
+        Optional<Movie> movie = moviesRepository.findMovieById(id);
+        if (movie.isPresent() && id.equals(movieUpdates.getId())) {
+            Movie movieStored = movieServices.updateMovie(movieUpdates, movie.get());
+            logger.log(Level.INFO, "Movie with the ID \"" + id + "\" returned to user");
+            return "movie-update-success";
+        } else {
+            logger.log(Level.WARNING, "No movies with the ID \"" + id + "\" returned to user");
+            return "no-movies-found";
+        }
+    }
+
+
     //delete
     @GetMapping("/movie/delete/{id}")
-    String deleteMovie(@PathVariable String id){
-        moviesRepository.deleteById(id);
-        return "movie-confirm-delete";
+    String deleteMovie(@PathVariable String id) {
+        Optional<Movie> movie = moviesRepository.findMovieById(id);
+        if (movie.isPresent()) {
+            moviesRepository.deleteById(id);
+            logger.log(Level.INFO, "Movie with the ID \"" + id + "\" deleted by user");
+            return "movie-confirm-delete";
+        } else {
+            logger.log(Level.INFO, "No movies with the ID \"" + id + "\" found, no deletion completed");
+            return "no-movies-found";
+        }
     }
 }

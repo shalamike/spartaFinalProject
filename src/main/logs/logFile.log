@@ -1,0 +1,10 @@
+Jun 30, 2023 12:40:19 PM org.apache.catalina.core.ApplicationContext log
+INFO: Initializing Spring DispatcherServlet 'dispatcherServlet'
+Jun 30, 2023 12:40:20 PM com.example.spartafinalproject.webcontrollers.MoviesWebController getMoviesByTitle
+INFO: List of movies with titles containing "Test" returned to user
+Jun 30, 2023 12:41:35 PM com.example.spartafinalproject.model.services.MovieServices setEmptyAttributesToNull
+INFO: All empty movie fields set to null
+Jun 30, 2023 12:41:35 PM com.example.spartafinalproject.model.services.MovieServices updateMovie
+INFO: Movie ID: testId, Title: Testing Generic Method updated
+Jun 30, 2023 12:41:35 PM com.example.spartafinalproject.webcontrollers.MoviesWebController postMovieToUpdate
+INFO: Movie with the ID "testId" returned to user

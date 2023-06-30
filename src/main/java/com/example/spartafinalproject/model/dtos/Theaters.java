@@ -16,6 +16,9 @@ public class Theaters{
 		this.id = id;
 	}
 
+	public Theaters() {
+	}
+
 	@JsonProperty("location")
 	private Location location;
 

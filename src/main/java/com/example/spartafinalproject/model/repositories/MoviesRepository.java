@@ -11,5 +11,5 @@ public interface MoviesRepository extends MongoRepository<Movie,String> {
     @Query("{id: '?0'}")
     Optional<Movie> findMovieById(String Id);
 
-    Optional<List<Movie>> findMovieByTitleContaining(String title);
+    List<Movie> findMovieByTitleContainingIgnoreCase(String title);
 }
