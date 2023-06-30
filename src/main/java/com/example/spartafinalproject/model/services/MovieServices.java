@@ -202,20 +202,20 @@ public class MovieServices {
         movie.setWriters((List<String>) setListToNullIfEmpty(movie.getWriters()));
         movie.setCountries((List<String>) setListToNullIfEmpty(movie.getCountries()));
         movie.setRated(setStrToNullIfEmpty(movie.getRated()));
-        movie.getTomatoes().setViewer((Viewer) setObjectToNullIfEmpty(movie.getTomatoes().getViewer()));
-        movie.setTomatoes((Tomatoes) setObjectToNullIfEmpty(movie.getTomatoes()));
+        movie.getTomatoes().setViewer(setObjectToNullIfEmpty(movie.getTomatoes().getViewer()));
+        movie.setTomatoes(setObjectToNullIfEmpty(movie.getTomatoes()));
         movie.setFullplot(setStrToNullIfEmpty(movie.getFullplot()));
-        movie.setImdb((Imdb) setObjectToNullIfEmpty(movie.getImdb()));
+        movie.setImdb(setObjectToNullIfEmpty(movie.getImdb()));
         movie.setPlot(setStrToNullIfEmpty(movie.getPlot()));
         movie.setGenres((List<String>) setListToNullIfEmpty(movie.getGenres()));
         movie.getAwards().setText(setStrToNullIfEmpty(movie.getAwards().getText()));
-        movie.setAwards((Awards) setObjectToNullIfEmpty(movie.getAwards()));
+        movie.setAwards(setObjectToNullIfEmpty(movie.getAwards()));
         movie.setLastupdated(setStrToNullIfEmpty(movie.getLastupdated()));
         movie.setPoster(setStrToNullIfEmpty(movie.getPoster()));
         logger.log(Level.INFO,"All empty movie fields set to null");
     }
 
-    private Object setObjectToNullIfEmpty(Object object) throws IllegalAccessException {
+    private <T> T setObjectToNullIfEmpty(T object) throws IllegalAccessException {
         Field[] fields = object.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);

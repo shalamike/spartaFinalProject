@@ -29,7 +29,7 @@
         <td th:text="${movie.year}"></td>
         <td th:text="${movie.type}"></td>
         <td>
-            <ul class="list-group list-group-flush" th:each="member:${movie.cast}">
+            <ul class="list-unstyled list-group list-group-flush" th:each="member:${movie.cast}">
                 <li class="list-group-item " th:text="${member}"></li>
             </ul>
         </td>

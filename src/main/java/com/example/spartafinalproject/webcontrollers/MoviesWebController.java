@@ -61,7 +61,18 @@ public class MoviesWebController {
 
     //read
 
-    //getMovieById add hateoas
+    @GetMapping("/movie/{id}")
+    public String getMovieById(Model model, @PathVariable("id") String id) {
+        Optional<Movie> movie = moviesRepository.findMovieById(id);
+        if (movie.isPresent()) {
+            logger.log(Level.INFO, "Movie ID: " + movie.get().getId() + ", Title: " + movie.get().getTitle() + " returned to user");
+            model.addAttribute("movie", movie.get());
+            return "movie-profile";
+        } else {
+            logger.log(Level.INFO, "No movies with the ID \"" + id + "\" found");
+            return "no-movies-found";
+        }
+    }
 
     @GetMapping("/movies/titles/{title}")
     public String getMoviesByTitle(Model model, @PathVariable String title) {
@@ -77,12 +88,12 @@ public class MoviesWebController {
     }
 
     //update
-    //get mapping with form
+
     @GetMapping("/movie/update/{id}")
     public String getMovieToUpdate(@PathVariable String id, Model model) {
         Optional<Movie> movie = moviesRepository.findMovieById(id);
         if (movie.isPresent()) {
-            model.addAttribute("foundMovie",movie.get());
+            model.addAttribute("foundMovie", movie.get());
 
             Movie movieUpdates = new Movie();
             movieUpdates.setId(id);
@@ -94,17 +105,17 @@ public class MoviesWebController {
         }
     }
 
-    //post mapping with data entry
+
     @PostMapping("/movie/update/{id}")
-    public String postMovieToUpdate(@PathVariable("id")String id, @ModelAttribute("movieUpdates")Movie movieUpdates) throws IllegalAccessException {
+    public String postMovieToUpdate(@PathVariable("id") String id, @ModelAttribute("movieUpdates") Movie movieUpdates) throws IllegalAccessException {
         movieServices.setEmptyAttributesToNull(movieUpdates);
 
-        Optional<Movie>  movie = moviesRepository.findMovieById(id);
-        if(movie.isPresent() && id.equals(movieUpdates.getId())){
+        Optional<Movie> movie = moviesRepository.findMovieById(id);
+        if (movie.isPresent() && id.equals(movieUpdates.getId())) {
             Movie movieStored = movieServices.updateMovie(movieUpdates, movie.get());
-            logger.log(Level.INFO,"Movie with the ID \""+id+"\" returned to user");
+            logger.log(Level.INFO, "Movie with the ID \"" + id + "\" returned to user");
             return "movie-update-success";
-        }else {
+        } else {
             logger.log(Level.WARNING, "No movies with the ID \"" + id + "\" returned to user");
             return "no-movies-found";
         }
